@@ -3,3 +3,4 @@ bin/
 bin-debug/
 bin-release/
 html-template/
+.settings/
