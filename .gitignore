@@ -1,0 +1,5 @@
+# Project build and release directories
+bin/
+bin-debug/
+bin-release/
+html-template/
