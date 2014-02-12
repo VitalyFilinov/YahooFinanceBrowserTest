@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:DataGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300"
+		 dataProvider="{data}" itemRendererFunction="getItemRenderer">
+	<fx:Script>
+		<![CDATA[
+			import com.vit.yahoobrowser.models.ISectorsListItem;
+			import com.vit.yahoobrowser.views.renderers.SectorsListItemRenderer;
+			
+			import mx.collections.ArrayList;
+			
+			[Bindable]
+			private var data:ArrayList = new ArrayList();
+			
+			public function setData(_data:Array):void
+			{
+				data.source = _data; 
+			}
+			
+			private function getItemRenderer(item:ISectorsListItem):IFactory
+			{
+				return new ClassFactory(SectorsListItemRenderer);
+			}
+			
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:VerticalLayout gap="1" />
+	</s:layout>
+</s:DataGroup>

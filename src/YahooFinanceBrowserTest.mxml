@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
-			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:robotlegs = "robotlegs.bender.mxml.*"
+			   xmlns:mvcs = "robotlegs.bender.bundles.mvcs.*"
+			   xmlns:app = "com.vit.yahoobrowser.*"
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="800" minHeight="600" xmlns:views="com.vit.yahoobrowser.views.*">
 	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<robotlegs:ContextBuilderTag>
+			<mvcs:MVCSBundle/>
+			<app:YahooFinanceBrowserConfig/>
+		</robotlegs:ContextBuilderTag>
 	</fx:Declarations>
+	<views:IndustryManagerView top="10" left="10"/>
+	<views:SectorsListView top="50" left="10"/>
 </s:Application>
