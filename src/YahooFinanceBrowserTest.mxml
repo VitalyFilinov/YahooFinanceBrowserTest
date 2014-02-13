@@ -4,7 +4,9 @@
 			   xmlns:robotlegs = "robotlegs.bender.mxml.*"
 			   xmlns:mvcs = "robotlegs.bender.bundles.mvcs.*"
 			   xmlns:app = "com.vit.yahoobrowser.*"
-			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="800" minHeight="600" xmlns:views="com.vit.yahoobrowser.views.*">
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="800" minHeight="600" width="800" height="600"
+			   xmlns:views="com.vit.yahoobrowser.views.*" creationComplete="init()">
+	
 	<fx:Declarations>
 		<robotlegs:ContextBuilderTag>
 			<mvcs:MVCSBundle/>
@@ -12,5 +14,10 @@
 		</robotlegs:ContextBuilderTag>
 	</fx:Declarations>
 	<views:IndustryManagerView top="10" left="10"/>
-	<views:SectorsListView top="50" left="10"/>
+	<s:BorderContainer width="200" height="350" borderColor="0x000000" top="50" left="10">
+		<s:Scroller horizontalScrollPolicy="off" top="4" right="4" bottom="4" left="4">
+			<views:SectorsListView width="100%" height="100%"/>
+		</s:Scroller>
+	</s:BorderContainer>
+
 </s:Application>

@@ -1,16 +1,15 @@
 package com.vit.yahoobrowser.models.vo
 {
-	import com.vit.yahoobrowser.models.ISectorsListItem;
 	import com.vit.yahoobrowser.models.YahooDataTypes;
 
-	public class SectorVO implements ISectorVO, ISectorsListItem
+	public class SectorVO implements ISectorVO
 	{
 		private var _id:int; 
 		private var _name:String; 
-		private var _industries:Vector.<IIndustryVO>; 
-		private var _selected:Boolean;
+		private var _industries:Array; 
+		private var _isOpened:Boolean;
 		
-		public function SectorVO(id:int, name:String, industries:Vector.<IIndustryVO>)
+		public function SectorVO(id:int, name:String, industries:Array)
 		{
 			_id = id;
 			_name = name;
@@ -27,19 +26,19 @@ package com.vit.yahoobrowser.models.vo
 			return _name;
 		}
 		
-		public function get industries():Vector.<IIndustryVO>
+		public function get industries():Array
 		{
 			return _industries;
 		}
 		
-		public function get selected():Boolean
+		public function get isOpened():Boolean
 		{
-			return _selected;
+			return _isOpened;
 		}
 		
-		public function set selected(value:Boolean):void
+		public function set isOpened(value:Boolean):void
 		{
-			_selected = value;
+			_isOpened = value;
 		}
 		
 		public function get type():String

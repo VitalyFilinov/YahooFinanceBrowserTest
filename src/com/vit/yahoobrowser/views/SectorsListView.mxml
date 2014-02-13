@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:DataGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300"
-		 dataProvider="{data}" itemRendererFunction="getItemRenderer">
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 dataProvider="{data}"
+		 itemRendererFunction="getItemRenderer"
+		 creationComplete="init()">
+	
 	<fx:Script>
 		<![CDATA[
-			import com.vit.yahoobrowser.models.ISectorsListItem;
-			import com.vit.yahoobrowser.views.renderers.SectorsListItemRenderer;
+			import com.vit.yahoobrowser.events.YahooDataEvent;
+			import com.vit.yahoobrowser.models.vo.IIndustryVO;
+			import com.vit.yahoobrowser.models.vo.ISectorVO;
+			import com.vit.yahoobrowser.views.renderers.SectorsListIndustryRenderer;
+			import com.vit.yahoobrowser.views.renderers.SectorsListSectorRenderer;
 			
 			import mx.collections.ArrayList;
 			
@@ -15,17 +21,66 @@
 			
 			public function setData(_data:Array):void
 			{
-				data.source = _data; 
+				data.source = _data;
 			}
 			
-			private function getItemRenderer(item:ISectorsListItem):IFactory
+			private function getItemRenderer(item:*):IFactory
 			{
-				return new ClassFactory(SectorsListItemRenderer);
+				if(item is ISectorVO)
+				{
+					return new ClassFactory(SectorsListSectorRenderer);
+				}
+				else if (item is IIndustryVO)
+				{
+					return new ClassFactory(SectorsListIndustryRenderer);
+				}
+				
+				return null;
+			}
+			
+			private function init():void
+			{
+				addEventListener(YahooDataEvent.SECTOR_SELECTED, onSectorSelect);
+				addEventListener(YahooDataEvent.INDUSTRY_SELECTED, onIndustrySelect);
+			}
+			
+			protected function onSectorSelect(event:Event):void
+			{
+				var t1:int = getTimer();
+				ISectorVO(event.target.data).isOpened = !ISectorVO(event.target.data).isOpened;
+				
+				var dataSource:Array
+				if(ISectorVO(event.target.data).isOpened)
+				{
+					dataSource = data.source.slice(0, event.target.itemIndex + 1);
+					dataSource = dataSource.concat(ISectorVO(event.target.data).industries);
+					dataSource = dataSource.concat(data.source.slice(event.target.itemIndex + 1));
+				}
+				else
+				{
+					dataSource = data.source;
+					dataSource.splice(event.target.itemIndex + 1, ISectorVO(event.target.data).industries.length);
+				}
+				
+				data.source = dataSource;
+				dataSource = [];
+				invalidateTypicalItemRenderer();
+				
+				event.target.currentState = ISectorVO(event.target.data).isOpened? "opened":"closed";
+				
+				var t2:int = getTimer();
+				
+				trace("TIME WASTED", t2 - t1);
+			}
+			
+			protected function onIndustrySelect(event:Event):void
+			{
+				trace("INDUSTRY SELECTED");
 			}
 			
 		]]>
 	</fx:Script>
 	<s:layout>
-		<s:VerticalLayout gap="1" />
+		<s:VerticalLayout gap="2" useVirtualLayout="true"/>
 	</s:layout>
 </s:DataGroup>

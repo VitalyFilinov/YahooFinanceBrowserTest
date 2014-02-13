@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				autoDrawBackground="false" width="100%">
+	<s:states>
+		<s:State name = "normal"/> 
+		<s:State name = "hovered"/>
+		<s:State name = "selected"/>
+		<s:State name = "normalClosed"/>
+		<s:State name = "hoveredClosed"/>
+		<s:State name = "normalOpened"/>
+		<s:State name = "hoveredOpened"/>
+	</s:states>
+	
+	<fx:Script> 
+		<![CDATA[
+			import com.vit.yahoobrowser.models.vo.ISectorVO;
+			import com.vit.yahoobrowser.models.vo.IIndustryVO;
+			import com.vit.yahoobrowser.events.YahooDataEvent;
+			import com.vit.yahoobrowser.resources.Resources;
+			import flash.events.Event;
+			
+			private var shown:Boolean = true;
+			private var savedHeight:int = -1;
+			
+			override public function set data(value:Object):void { 
+				super.data = value; 
+				
+				// Check to see if the data property is null. 
+				if (value== null) 
+					return;
+				
+				itemLabel.text = ISectorVO(data).name;
+				trace("------------", itemLabel.height);
+				setCurrentState(ISectorVO(data).isOpened? "opened":"closed");
+			}
+			
+			protected function clickHandler(event:MouseEvent):void
+			{
+				if(data is ISectorVO)
+				{
+					dispatchEvent(new Event(YahooDataEvent.SECTOR_SELECTED, true));
+				}
+				else if(data is IIndustryVO)
+				{
+					dispatchEvent(new Event(YahooDataEvent.INDUSTRY_SELECTED, true));
+				}
+			}
+			
+			override public function setCurrentState(stateName:String, playTransition:Boolean=true):void
+			{
+				trace("setCurrentState", stateName, currentState);
+				if(currentState == null)
+				{
+					if(stateName == "closed" || stateName == "normal")
+					{
+						super.setCurrentState("normalClosed");
+					}
+					else if(stateName == "opened")
+					{
+						super.setCurrentState("normalOpened");
+					}
+					else
+					{
+						// stateName is hovered
+						super.setCurrentState("hoveredClosed");
+					}
+					return;
+				}
+				
+				if(stateName == "opened")
+				{
+					if(currentState == "hovered"
+							|| currentState == "hoveredClosed")
+					{
+						super.setCurrentState("hoveredOpened");
+					}
+					else if(currentState == "normal" || currentState == "normalClosed")
+					{
+						super.setCurrentState("normalOpened");
+					}
+					else
+					{
+						// currentState is "hoveredOpened" or "normalOpened"
+						// do nothing
+					}
+					return;
+				}
+				
+				if(stateName == "closed")
+				{
+					if(currentState == "hovered" || currentState == "hoveredOpened")
+					{
+						super.setCurrentState("hoveredClosed");
+					}
+					else if(currentState == "normal" || currentState == "normalOpened")
+					{
+						super.setCurrentState("normalClosed");
+					}
+					else
+					{
+						// currentState is "hoveredClosed" or "normalClosed"
+						// do nothing
+					}
+					return;
+				}
+				
+				if(stateName == "normal")
+				{
+					if(currentState == "hovered" 
+							|| currentState == "normal"
+							|| currentState == "hoveredClosed"
+							|| currentState == "normalClosed")
+					{
+						super.setCurrentState("normalClosed");
+					}
+					else if(currentState == "hoveredOpened")
+					{
+						super.setCurrentState("normalOpened");
+					}
+					return;
+				}
+				
+				if(stateName == "hovered")
+				{
+					if(currentState == "normal" 
+							|| currentState == "hovered"
+							|| currentState == "normalClosed"
+							|| currentState == "hoveredClosed")
+					{
+						super.setCurrentState("hoveredClosed");
+					}
+					else if(currentState == "normalOpened")
+					{
+						super.setCurrentState("hoveredOpened");
+					}
+					return;}
+				trace(stateName);
+				
+				super.setCurrentState(stateName, playTransition);
+			}
+			
+		]]> 
+	</fx:Script>
+	
+	<s:Rect width="100%" height="{itemLabel.height + 6}" includeIn="hoveredOpened, hoveredClosed">
+		<s:fill>
+			<s:SolidColor color="#F0F0F0"/>
+		</s:fill>
+	</s:Rect>
+	
+	<s:Group width="100%" height="{itemLabel.height + 6}">
+		<s:layout>
+			<s:HorizontalLayout gap="4" verticalAlign="middle"/>
+		</s:layout>
+		<s:Image source="{Resources.PLUS}" includeIn="normalClosed, hoveredClosed, hovered" click="clickHandler(event)"/>
+		<s:Image source="{Resources.MINUS}" includeIn="normalOpened, hoveredOpened" click="clickHandler(event)"/>
+		<s:Group>
+			<s:Label id="itemLabel" text="Undefined" fontSize="12" top="4"/>
+		</s:Group>
+	</s:Group>
+</s:ItemRenderer>

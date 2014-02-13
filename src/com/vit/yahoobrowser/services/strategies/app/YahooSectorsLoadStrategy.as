@@ -1,8 +1,6 @@
 package com.vit.yahoobrowser.services.strategies.app
 {
 	import com.vit.yahoobrowser.models.YahooLoaderDataTypes;
-	import com.vit.yahoobrowser.models.vo.IIndustryVO;
-	import com.vit.yahoobrowser.models.vo.ISectorVO;
 	import com.vit.yahoobrowser.models.vo.IndustryVO;
 	import com.vit.yahoobrowser.models.vo.SectorVO;
 
@@ -31,21 +29,28 @@ package com.vit.yahoobrowser.services.strategies.app
 			var sectorsData:Array = json.query.results.sector as Array;
 			sectorsData.reverse();
 			
-			var sectors:Vector.<ISectorVO> = new Vector.<ISectorVO>();
+			var sectors:Array = [];
 			var a:int = sectorsData.length;
 			
-			var industries:Vector.<IIndustryVO> = new Vector.<IIndustryVO>();
+			var industries:Array;
 			var industriesData:Array;
 			var b:int;
 			
 			while(a--)
 			{
-				industries = new Vector.<IIndustryVO>();
+				industries = new Array;
 				
-				if(sectorsData.industry)
+				if(sectorsData[a].industry)
 				{
-					industriesData = sectorsData.industry;
-					industriesData.revers();
+					if(sectorsData[a].industry is Array)
+					{
+						industriesData = sectorsData[a].industry;
+					}
+					else
+					{
+						industriesData = [sectorsData[a].industry];
+					}
+					industriesData.reverse();
 					b = industriesData.length;
 					while(b--)
 					{

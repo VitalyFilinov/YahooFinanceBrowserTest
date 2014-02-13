@@ -2,10 +2,10 @@ package com.vit.yahoobrowser.models.vo
 {
 	public interface ISectorVO
 	{
-		function get id():int
-		function get name():String
-		function get industries():Vector.<IIndustryVO>
-		function get selected():Boolean
-		function set selected(value:Boolean):void
+		function get id():int;
+		function get name():String;
+		function get industries():Array;
+		function get isOpened():Boolean;
+		function set isOpened(value:Boolean):void;
 	}
 }

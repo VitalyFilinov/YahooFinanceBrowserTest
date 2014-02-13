@@ -1,9 +1,8 @@
 package com.vit.yahoobrowser.models.vo
 {
 	import com.vit.yahoobrowser.models.YahooDataTypes;
-	import com.vit.yahoobrowser.models.ISectorsListItem;
 
-	public class CompanyVO implements ICompanyVO, ISectorsListItem
+	public class CompanyVO implements ICompanyVO
 	{
 		private var _selected:Boolean;
 		

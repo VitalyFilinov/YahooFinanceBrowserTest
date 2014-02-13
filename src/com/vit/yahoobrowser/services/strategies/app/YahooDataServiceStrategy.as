@@ -15,6 +15,7 @@ package com.vit.yahoobrowser.services.strategies.app
 			{
 				setStrategy(new YahooSectorsLoadStrategy());
 			}
+				
 		}
 		
 		private function setStrategy(strategy:IDataLoaderStrategy):void

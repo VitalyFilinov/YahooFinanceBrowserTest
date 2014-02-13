@@ -1,11 +1,11 @@
 package com.vit.yahoobrowser.views
 {
-	import robotlegs.bender.bundles.mvcs.Mediator;
+	import com.vit.yahoobrowser.events.YahooDataEvent;
+	import com.vit.yahoobrowser.models.YahooDataModel;
 	
 	import flash.events.Event;
 	
-	import com.vit.yahoobrowser.events.YahooDataEvent;
-	import com.vit.yahoobrowser.models.YahooDataModel;
+	import robotlegs.bender.bundles.mvcs.Mediator;
 	
 	public class SectorsListMediator extends Mediator
 	{
@@ -22,7 +22,7 @@ package com.vit.yahoobrowser.views
 		
 		private function onSectorsChanged(event:Event):void
 		{
-			view.setData(dataModel.getCurrentSectorsList());
+			view.setData(dataModel.getSectors());
 		}
 	}
 }

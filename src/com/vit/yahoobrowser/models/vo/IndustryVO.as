@@ -1,13 +1,13 @@
 package com.vit.yahoobrowser.models.vo
 {
 	import com.vit.yahoobrowser.models.YahooDataTypes;
-	import com.vit.yahoobrowser.models.ISectorsListItem;
 
-	public class IndustryVO implements IIndustryVO, ISectorsListItem
+	public class IndustryVO implements IIndustryVO
 	{
 		private var _id:int;
 		private var _name:String;
 		private var _selected:Boolean;
+		private var _isFavorite:Boolean;
 		
 		public function IndustryVO(id:int, name:String)
 		{
@@ -26,6 +26,16 @@ package com.vit.yahoobrowser.models.vo
 		}
 		
 		public function set selected(value:Boolean):void
+		{
+			_selected = value;
+		}
+		
+		public function get isFavorite():Boolean
+		{
+			return _selected;
+		}
+		
+		public function set isFavorite(value:Boolean):void
 		{
 			_selected = value;
 		}
