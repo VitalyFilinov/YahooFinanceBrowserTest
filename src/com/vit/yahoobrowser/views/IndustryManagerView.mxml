@@ -1,18 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300">
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:views="com.vit.yahoobrowser.views.*"
+		 currentState="closed"
+		 width="200">
+	
+	<s:states>
+		<s:State name="opened"/>
+		<s:State name="closed"/>
+	</s:states>
+	
 	<fx:Script>
 		<![CDATA[
-			import com.vit.yahoobrowser.events.YahooLoadDataEvent;
-			import com.vit.yahoobrowser.models.YahooLoaderDataTypes;
+			import com.vit.yahoobrowser.events.YahooDataSearchEvent;
 			
-			private function testClick(event:MouseEvent):void
+			import mx.events.FlexEvent;
+			
+			import spark.events.TextOperationEvent;
+			
+			[Bindable]
+			public var sectorListHeight:int = 100;
+			
+			private var data:Array = [];
+			
+			private function onListButtonClick(event:MouseEvent):void
 			{
-				dispatchEvent(new YahooLoadDataEvent(YahooLoadDataEvent.LOAD_DATA, YahooLoaderDataTypes.SECTORS));
+				setCurrentState(currentState == "opened"? "closed":"opened");
+			}
+			
+			public function get sectorListY():int
+			{
+				var result:int = searchBlock.height + vLayout.gap;
+				return result;
+			}
+			
+			protected function saveClickHandler(event:MouseEvent):void
+			{
+				setCurrentState("closed");
+			}
+			
+			protected function cancelClickHandler(event:MouseEvent):void
+			{
+				//TODO clean
+				setCurrentState("closed");
+			}
+			
+			public function setSectors(_data:Array):void
+			{
+				data = _data;
+				if(list != null)
+				{
+					setListData();
+				}
+			}
+			
+			protected function setListData(event:FlexEvent = null):void
+			{
+				list.setData(data);
+			}
+			
+			protected function changeHandler(event:TextOperationEvent):void
+			{
+				trace("SEARCH STRING:", search.value);
+				if(search.value.length > 2 || search.value.length == 0)
+				{
+					dispatchEvent(new YahooDataSearchEvent(YahooDataSearchEvent.SEARCH, search.value));
+				}
+			}
+			
+			public function setSearchResult(data:Array):void
+			{
+				if(currentState == "closed")
+				{
+					setCurrentState("opened");
+				}
+				setSectors(data);
 			}
 			
 		]]>
 	</fx:Script>
-	<s:Button label="test" click="testClick(event)"/>
+	
+	<s:layout>
+		<s:VerticalLayout id="vLayout" gap="2"/>
+	</s:layout>
+	
+	<s:BorderContainer id="searchBlock" width="100%" borderColor="0x000000" height="32">
+		<views:SearchtextInput id="search" left="2" right="30" text="Search" top="2" height="26" change="changeHandler(event)"/>
+		<views:IndustryManagerListButton right="2" top="2" click="onListButtonClick(event)" width="26" height="26"/>
+	</s:BorderContainer>
+	
+	<s:BorderContainer id="listContainer" width="100%" borderColor="0x000000" height="{sectorListHeight}" visible.opened="true" visible.closed="false" creationComplete="setListData(event)">
+		<s:Scroller horizontalScrollPolicy="off" top="4" right="4" bottom="38" left="4">
+			<s:viewport>
+				<views:SectorsList id="list" width="100%" bottom="34"/>
+			</s:viewport>
+		</s:Scroller>
+		<s:Group width="100%" bottom="0">
+			<s:layout>
+				<s:HorizontalLayout id="btnLayout" gap="0"/>
+			</s:layout>
+			<s:Button id="saveBtn" label="Save" width="50%" height="34" click="saveClickHandler(event)"/>
+			<s:Button id="cancelBtn" label="Cancel" width="50%" height="34" click="cancelClickHandler(event)"/>
+		</s:Group>
+	</s:BorderContainer>
+	
 </s:Group>

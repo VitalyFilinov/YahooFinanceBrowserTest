@@ -4,8 +4,14 @@
 			   xmlns:robotlegs = "robotlegs.bender.mxml.*"
 			   xmlns:mvcs = "robotlegs.bender.bundles.mvcs.*"
 			   xmlns:app = "com.vit.yahoobrowser.*"
-			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="800" minHeight="600" width="800" height="600"
+			   minWidth="800" minHeight="600" width="800" height="600"
 			   xmlns:views="com.vit.yahoobrowser.views.*" creationComplete="init()">
+	
+	<fx:Script>
+		<![CDATA[
+			private static const DEFAULT_SPACE:int = 10;
+		]]>
+	</fx:Script>
 	
 	<fx:Declarations>
 		<robotlegs:ContextBuilderTag>
@@ -13,11 +19,9 @@
 			<app:YahooFinanceBrowserConfig/>
 		</robotlegs:ContextBuilderTag>
 	</fx:Declarations>
-	<views:IndustryManagerView top="10" left="10"/>
-	<s:BorderContainer width="200" height="350" borderColor="0x000000" top="50" left="10">
-		<s:Scroller horizontalScrollPolicy="off" top="4" right="4" bottom="4" left="4">
-			<views:SectorsListView width="100%" height="100%"/>
-		</s:Scroller>
+	
+	<s:BorderContainer id="favoriteIndustries" width="200" height="350" borderColor="0x000000" top="{DEFAULT_SPACE + industryManager.sectorListY}" left="{DEFAULT_SPACE}">
 	</s:BorderContainer>
+	<views:IndustryManagerView id="industryManager" top="{DEFAULT_SPACE}" left="{DEFAULT_SPACE}" sectorListHeight="{favoriteIndustries.height}"/>
 
 </s:Application>

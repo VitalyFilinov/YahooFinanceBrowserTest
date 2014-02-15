@@ -1,6 +1,8 @@
 package com.vit.yahoobrowser.models.vo
 {
 	import com.vit.yahoobrowser.models.YahooDataTypes;
+	
+	import mx.collections.ArrayList;
 
 	public class SectorVO implements ISectorVO
 	{
@@ -26,9 +28,9 @@ package com.vit.yahoobrowser.models.vo
 			return _name;
 		}
 		
-		public function get industries():Array
+		public function get industries():ArrayList
 		{
-			return _industries;
+			return new ArrayList(_industries);
 		}
 		
 		public function get isOpened():Boolean
@@ -44,6 +46,11 @@ package com.vit.yahoobrowser.models.vo
 		public function get type():String
 		{
 			return YahooDataTypes.SECTOR;
+		}
+		
+		public function clone(emptySectors:Boolean = false):ISectorVO
+		{
+			return new SectorVO(_id, _name, emptySectors? []:_industries);
 		}
 	}
 }

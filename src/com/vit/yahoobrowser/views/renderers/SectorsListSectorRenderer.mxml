@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
 				xmlns:s="library://ns.adobe.com/flex/spark" 
-				xmlns:mx="library://ns.adobe.com/flex/mx"
-				autoDrawBackground="false" width="100%">
+				xmlns:views="com.vit.yahoobrowser.views.*"
+				autoDrawBackground="false" width="100%"
+				mouseEnabled="false">
 	<s:states>
-		<s:State name = "normal"/> 
-		<s:State name = "hovered"/>
+		<s:State name = "normal" basedOn="normalClosed"/> 
+		<s:State name = "hovered" basedOn="hoveredClosed"/>
 		<s:State name = "selected"/>
 		<s:State name = "normalClosed"/>
 		<s:State name = "hoveredClosed"/>
@@ -15,16 +16,19 @@
 	
 	<fx:Script> 
 		<![CDATA[
-			import com.vit.yahoobrowser.models.vo.ISectorVO;
-			import com.vit.yahoobrowser.models.vo.IIndustryVO;
 			import com.vit.yahoobrowser.events.YahooDataEvent;
+			import com.vit.yahoobrowser.models.vo.IIndustryVO;
+			import com.vit.yahoobrowser.models.vo.ISectorVO;
 			import com.vit.yahoobrowser.resources.Resources;
+			
 			import flash.events.Event;
 			
-			private var shown:Boolean = true;
-			private var savedHeight:int = -1;
+			import mx.events.FlexEvent;
 			
-			override public function set data(value:Object):void { 
+			private var opened:Boolean = false;
+			
+			override public function set data(value:Object):void
+			{ 
 				super.data = value; 
 				
 				// Check to see if the data property is null. 
@@ -32,25 +36,36 @@
 					return;
 				
 				itemLabel.text = ISectorVO(data).name;
-				trace("------------", itemLabel.height);
 				setCurrentState(ISectorVO(data).isOpened? "opened":"closed");
 			}
 			
 			protected function clickHandler(event:MouseEvent):void
 			{
-				if(data is ISectorVO)
+				if(opened)
+				{
+					setCurrentState("closed");
+					opened = false;
+				}
+				else
+				{
+					setCurrentState("opened");
+					opened = true;
+				}
+				
+				trace("CURRENT STATE:", currentState);
+					
+				/*if(data is ISectorVO)
 				{
 					dispatchEvent(new Event(YahooDataEvent.SECTOR_SELECTED, true));
 				}
 				else if(data is IIndustryVO)
 				{
 					dispatchEvent(new Event(YahooDataEvent.INDUSTRY_SELECTED, true));
-				}
+				}*/
 			}
 			
 			override public function setCurrentState(stateName:String, playTransition:Boolean=true):void
 			{
-				trace("setCurrentState", stateName, currentState);
 				if(currentState == null)
 				{
 					if(stateName == "closed" || stateName == "normal")
@@ -66,6 +81,7 @@
 						// stateName is hovered
 						super.setCurrentState("hoveredClosed");
 					}
+					trace("currentState == null", currentState);
 					return;
 				}
 				
@@ -85,6 +101,7 @@
 						// currentState is "hoveredOpened" or "normalOpened"
 						// do nothing
 					}
+					trace("stateName == opened", currentState);
 					return;
 				}
 				
@@ -103,6 +120,7 @@
 						// currentState is "hoveredClosed" or "normalClosed"
 						// do nothing
 					}
+					trace("stateName == closed", currentState);
 					return;
 				}
 				
@@ -119,6 +137,7 @@
 					{
 						super.setCurrentState("normalOpened");
 					}
+					trace("stateName == normal", currentState);
 					return;
 				}
 				
@@ -135,11 +154,22 @@
 					{
 						super.setCurrentState("hoveredOpened");
 					}
-					return;}
-				trace(stateName);
+					trace("stateName == hovered", currentState);
+					return;
+				}
+				
 				
 				super.setCurrentState(stateName, playTransition);
+				trace("stateName == ANOTHER", stateName, currentState);
 			}
+			
+			protected function childrensCreated(event:FlexEvent):void
+			{
+				trace("----------> childrensCreated");
+				childrenList.setData(ISectorVO(data).industries);
+			}
+			
+			
 			
 		]]> 
 	</fx:Script>
@@ -150,14 +180,22 @@
 		</s:fill>
 	</s:Rect>
 	
-	<s:Group width="100%" height="{itemLabel.height + 6}">
+	<s:Group width="100%">
 		<s:layout>
-			<s:HorizontalLayout gap="4" verticalAlign="middle"/>
+			<s:VerticalLayout gap="2"/>
 		</s:layout>
-		<s:Image source="{Resources.PLUS}" includeIn="normalClosed, hoveredClosed, hovered" click="clickHandler(event)"/>
-		<s:Image source="{Resources.MINUS}" includeIn="normalOpened, hoveredOpened" click="clickHandler(event)"/>
-		<s:Group>
-			<s:Label id="itemLabel" text="Undefined" fontSize="12" top="4"/>
+		<s:Group width="100%" height="{itemLabel.height + 6}">
+			<s:layout>
+				<s:HorizontalLayout gap="4" verticalAlign="middle"/>
+			</s:layout>
+			<s:Image source="{Resources.PLUS}" includeIn="normalClosed, hoveredClosed, hovered" click="clickHandler(event)"/>
+			<s:Image source="{Resources.MINUS}" includeIn="normalOpened, hoveredOpened" click="clickHandler(event)"/>
+			<s:Group>
+				<s:Label id="itemLabel" text="Undefined" fontSize="12" top="4"/>
+			</s:Group>
+		</s:Group>
+		<s:Group width="100%">
+			<views:SectorsListView id="childrenList" width="100%" visible.normalOpened="true" visible.hoveredOpened="true" visible.normalClosed="false" visible.hoveredClosed="false" creationComplete="childrensCreated(event)" mouseEnabled="false" mouseChildren="true"/>
 		</s:Group>
 	</s:Group>
 </s:ItemRenderer>

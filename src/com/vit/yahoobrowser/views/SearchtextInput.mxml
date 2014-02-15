@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TextInput xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			 xmlns:s="library://ns.adobe.com/flex/spark"
+			 creationComplete="init(event)">
+	<s:fontSize>
+		12
+	</s:fontSize>
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			private var defaultText:String;
+			
+			protected function init(event:FlexEvent):void
+			{
+				defaultText = this.text;
+				addEventListener(FocusEvent.MOUSE_FOCUS_CHANGE, onMouseFocusChange);
+			}
+
+			override protected function focusInHandler(event:FocusEvent):void
+			{
+				if(text.replace(/ /g, "") == defaultText)
+				{
+					this.text = "";
+				}
+				super.focusInHandler(event);
+			}
+
+			override protected function focusOutHandler(event:FocusEvent):void
+			{
+				if(text.replace(/ /g, "") == "")
+				{
+					this.text = defaultText;
+				}
+				super.focusOutHandler(event);
+			}
+			
+			protected function onMouseFocusChange(event:FocusEvent):void
+			{
+				if(stage)
+				{
+					stage.focus = null;
+				}
+			}
+			
+			public function get value():String
+			{
+				return text == defaultText? "":text;
+			}
+			
+		]]>
+	</fx:Script>
+</s:TextInput>

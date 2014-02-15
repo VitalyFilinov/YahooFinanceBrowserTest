@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false"
+				rollOver="rollOverHandler(event)"
+				rollOut="rollOutHandler(event)"
+				width="100%" currentState="uncheckedOut">
+	
+	<s:states>
+		<s:State name = "checkedOver"/>
+		<s:State name = "uncheckedOver"/>
+		<s:State name = "checkedOut"/>
+		<s:State name = "uncheckedOut"/>
+	</s:states>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.vit.yahoobrowser.models.vo.IIndustryVO;
+			import com.vit.yahoobrowser.resources.Resources;
+			
+			private var isChecked:Boolean = false;
+			private var isMouseOver:Boolean = false;
+			private var vo:IIndustryVO;
+			
+			/*override public function set data(value:Object):void
+			{
+				//vo = IIndustryVO(value);
+				//super.data = vo.name;
+				super.data = value;
+			}*/
+			
+			protected function onCheckBoxClick(event:MouseEvent):void
+			{
+				isChecked = !isChecked;
+				updateState();
+			}
+			
+			protected function rollOverHandler(event:MouseEvent):void
+			{
+				isMouseOver = true;
+				updateState();
+			}
+			
+			protected function rollOutHandler(event:MouseEvent):void
+			{
+				isMouseOver = false;
+				updateState();
+			}
+			
+			private function updateState():void
+			{
+				if(isMouseOver)
+				{
+					setCurrentState(isChecked? "checkedOver" : "uncheckedOver");
+				}
+				else
+				{
+					setCurrentState(isChecked? "checkedOut" : "uncheckedOut");
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<!--s:Rect left="18" right="2" height="{itemLabel.height + 6}" includeIn="checkedOver, uncheckedOver">
+		<s:fill>
+			<s:SolidColor color="#F0F0F0"/>
+		</s:fill>
+	</s:Rect>
+	
+	<s:Group width="100%" height="{itemLabel.height + 6}">
+		<s:Group left="20" right="23">
+			<s:Label id="itemLabel" text="{data}" fontSize="11" width="100%" top="4"/>
+		</s:Group>
+		<s:Image source="{Resources.CHECKBOX_YES}" includeIn="checkedOver, checkedOut" click="onCheckBoxClick(event)" top="1" right="4"/>
+		<s:Image source="{Resources.CHECKBOX_NO}" includeIn="uncheckedOver, uncheckedOut" click="onCheckBoxClick(event)" top="1" right="4"/>
+	</s:Group-->
+	
+	<s:Label id="itemLabel" text="{data}" fontSize="11" width="100%" top="4"/>
+	
+</s:ItemRenderer>

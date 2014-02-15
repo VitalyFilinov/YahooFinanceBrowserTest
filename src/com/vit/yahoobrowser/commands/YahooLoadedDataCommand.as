@@ -9,7 +9,7 @@ package com.vit.yahoobrowser.commands
 	public class YahooLoadedDataCommand extends Command
 	{
 		[Inject]
-		public var model:YahooDataModel;
+		public var dataModel:YahooDataModel;
 		
 		[Inject]
 		public var event:DataLoaderEvent;
@@ -20,7 +20,7 @@ package com.vit.yahoobrowser.commands
 			{
 				if(event.loaderID == YahooLoaderDataTypes.SECTORS)
 				{
-					model.setSectors(event.loadedData);
+					dataModel.setSectors(event.loadedData);
 				}
 			}
 			else if(event.type == DataLoaderEvent.EVENT_DATA_FAILED)

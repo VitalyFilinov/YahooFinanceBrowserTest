@@ -10,6 +10,7 @@ package com.vit.yahoobrowser.events
 		public function DataLoaderProgressEvent(type:String, loaderID:String, bubbles:Boolean=false, cancelable:Boolean=false, bytesLoaded:Number=0, bytesTotal:Number=0)
 		{
 			super(type, bubbles, cancelable, bytesLoaded, bytesTotal);
+			_loaderID = loaderID;
 		}
 		
 		public function get loaderID():String

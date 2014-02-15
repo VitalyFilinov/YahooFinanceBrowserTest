@@ -11,6 +11,9 @@ package com.vit.yahoobrowser.events
 		public static const SECTOR_SELECTED:String = "list_sector_selected";
 		public static const INDUSTRY_SELECTED:String = "list_industry_selected";
 		
+		public static const SECTOR_OPEN:String = "list_sector_open";
+		public static const SECTOR_CLOSE:String = "list_sector_close";
+		
 		public static const INDUSTRY_CHECKED:String = "list_industry_checked";
 		public static const INDUSTRY_UNCHECKED:String = "list_industry_unchecked";
 		

@@ -17,10 +17,11 @@ package com.vit.yahoobrowser.views
 		
 		override public function initialize():void
 		{
-			addContextListener(YahooDataEvent.SECTORS_CHANGED, onSectorsChanged, Event);
+			setSectors();
+			addContextListener(YahooDataEvent.SECTORS_CHANGED, setSectors, Event);
 		}
 		
-		private function onSectorsChanged(event:Event):void
+		private function setSectors(event:Event = null):void
 		{
 			view.setData(dataModel.getSectors());
 		}
