@@ -1,28 +1,34 @@
 package com.vit.yahoobrowser.events
 {
+	import com.vit.yahoobrowser.models.vo.IIndustryVO;
+	
 	import flash.events.Event;
 	
 	public class YahooFavoritesEvent extends Event
 	{
 		public static const ADD:String = "favorites_add";
 		public static const REMOVE:String = "favorites_remove";
+		public static const COMPLETE_REMOVE:String = "favorites_complete_remove";
+		public static const SAVE:String = "favorites_save";
+		public static const RESET:String = "favorites_reset";
+		public static const CHANGED:String = "favorites_changed";
 		
-		private var _items:Array;
+		private var _item:IIndustryVO;
 		
-		public function YahooFavoritesEvent(type:String, items:Array, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function YahooFavoritesEvent(type:String, item:IIndustryVO = null, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
-			_items = items;
+			_item = item;
 		}
 		
-		public function get items():Array
+		public function get item():IIndustryVO
 		{
-			return _items;
+			return _item;
 		}
 		
 		override public function clone():Event
 		{
-			return new YahooFavoritesEvent(type, items, bubbles, cancelable);
+			return new YahooFavoritesEvent(type, item, bubbles, cancelable);
 		}
 	}
 }

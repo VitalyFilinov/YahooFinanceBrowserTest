@@ -33,7 +33,7 @@ package com.vit.yahoobrowser.services.app
 				{
 					if(stock[i].strategy.id == strategy.id)
 					{
-						return;
+						//return;
 					}
 				}
 			}

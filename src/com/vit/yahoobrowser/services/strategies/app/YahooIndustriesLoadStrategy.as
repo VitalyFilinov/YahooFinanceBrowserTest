@@ -2,11 +2,10 @@ package com.vit.yahoobrowser.services.strategies.app
 {
 	import com.vit.yahoobrowser.models.YahooLoaderDataTypes;
 	import com.vit.yahoobrowser.models.vo.IndustryVO;
-	import com.vit.yahoobrowser.models.vo.SectorVO;
 	
 	import mx.collections.ArrayList;
 
-	public class YahooSectorsToALLoadStrategy extends YahooDataLoadStrategy
+	public class YahooIndustriesLoadStrategy extends YahooDataLoadStrategy
 	{
 		override protected function get query():String
 		{
@@ -15,7 +14,7 @@ package com.vit.yahoobrowser.services.strategies.app
 		
 		override public function get id():String
 		{
-			return YahooLoaderDataTypes.SECTORS;
+			return YahooLoaderDataTypes.INDUSTRIES;
 		}
 		
 		override public function parse(data:Object):Object
@@ -29,18 +28,17 @@ package com.vit.yahoobrowser.services.strategies.app
 			}
 			
 			var sectorsData:Array = json.query.results.sector as Array;
-			sectorsData.reverse();
 			
-			var sectors:Array = [];
-			var a:int = sectorsData.length;
+			var sectors:ArrayList = new ArrayList();
+			var aLen:int = sectorsData.length;
 			
-			var industries:Array;
+			var industries:ArrayList;
 			var industriesData:Array;
-			var b:int;
+			var bLen:int;
 			
-			while(a--)
+			for(var a:int = 0; a<aLen; a++)
 			{
-				industries = new Array;
+				industries = new ArrayList();
 				
 				if(sectorsData[a].industry)
 				{
@@ -52,18 +50,18 @@ package com.vit.yahoobrowser.services.strategies.app
 					{
 						industriesData = [sectorsData[a].industry];
 					}
-					industriesData.reverse();
-					b = industriesData.length;
-					while(b--)
+					
+					bLen = industriesData.length;
+					for(var b:int = 0; b<bLen; b++)
 					{
-						industries[industries.length] = new IndustryVO(industriesData[b].id, industriesData[b].name);
+						industries.addItem(new IndustryVO(industriesData[b].id, industriesData[b].name));
 					}
 				}
 				
-				sectors[sectors.length] = new SectorVO(a, sectorsData[a]["name"], industries);
+				sectors.addItem(new IndustryVO(a, sectorsData[a]["name"], industries));
 			}
 			
-			return ArrayList(sectors);
+			return sectors;
 		}
 	}
 	

@@ -9,13 +9,25 @@ package com.vit.yahoobrowser.services.strategies.app
 	{
 		private var _strategy:IDataLoaderStrategy;
 		
-		public function YahooDataServiceStrategy(strategyType:String)
+		public function YahooDataServiceStrategy(strategyType:String, params:Object = null)
 		{
-			if(strategyType == YahooLoaderDataTypes.SECTORS)
+			if(strategyType == YahooLoaderDataTypes.INDUSTRIES)
 			{
-				setStrategy(new YahooSectorsLoadStrategy());
+				setStrategy(new YahooIndustriesLoadStrategy());
 			}
-				
+			else if(strategyType == YahooLoaderDataTypes.COMPANIES)
+			{
+				setStrategy(new YahooCompaniesLoadStrategy());
+			}
+			else if(strategyType == YahooLoaderDataTypes.QUOTES)
+			{
+				setStrategy(new YahooQuotesLoadStrategy());
+			}
+			
+			if(params != null)
+			{
+				setParams(params);
+			}
 		}
 		
 		private function setStrategy(strategy:IDataLoaderStrategy):void
@@ -36,6 +48,11 @@ package com.vit.yahoobrowser.services.strategies.app
 		public function parse(data:Object):Object
 		{
 			return _strategy.parse(data);
+		}
+		
+		public function setParams(params:Object):void
+		{
+			return _strategy.setParams(params);
 		}
 	}
 }

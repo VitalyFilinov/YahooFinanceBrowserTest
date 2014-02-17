@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				   xmlns:s="library://ns.adobe.com/flex/spark"
+				   xmlns:mx="library://ns.adobe.com/flex/mx"
+				   xmlns:views="com.vit.yahoobrowser.views.*"
+				   width="100%" height="100%" currentState="hidden">
+	
+	<s:states>
+		<s:State name="loading"/>
+		<s:State name="data"/>
+		<s:State name="hidden"/>
+	</s:states>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.vit.yahoobrowser.models.vo.IChartVO;
+			
+			import mx.collections.ArrayCollection;
+			
+			private var data:IChartVO;
+			
+			[Bindable]
+			public var expenses:ArrayCollection = new ArrayCollection([
+				{Month:"Jan", Profit:2000, Expenses:1500, Amount:450},
+				{Month:"Feb", Profit:1000, Expenses:200, Amount:600},
+				{Month:"Mar", Profit:1500, Expenses:500, Amount:300}
+			]);
+			
+			[Bindable]
+			public var quotes:ArrayCollection = new ArrayCollection();
+			
+			[Bindable]
+			public var minimum:Number;
+			
+			[Bindable]
+			public var maximum:Number;
+			
+			[Bindable]
+			public var symbol:String;
+			
+			public function setChartData(_data:IChartVO):void
+			{
+				var vo:IChartVO = _data as IChartVO;
+				if(_data == null)
+				{
+					return;
+				}
+				
+				quotes.source = vo.quotes;
+				symbol = vo.symbol;
+				setCurrentState("data");
+				
+				minimum = vo.minimum - (vo.maximum - vo.minimum) / vo.quotes.length;
+				if(minimum < 0.00001) minimum = 0.00001
+				if(minimum == vo.minimum)
+				{
+					minimum = vo.minimum >> 1;
+				}
+				
+				maximum = vo.maximum + vo.minimum - minimum;
+			}
+			
+			public function setLoading():void
+			{
+				setCurrentState("loading");
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Group id="chartContainer" left="0" right="0" top="0" bottom="0" includeIn="data">
+		<mx:AreaChart id="chart" dataProvider="{quotes}" width="100%" height="100%" showDataTips="true" paddingLeft="0">
+			<mx:backgroundElements>
+				<mx:GridLines horizontalChangeCount="1" verticalChangeCount="1">
+					<mx:horizontalStroke>
+						<s:SolidColorStroke weight="1" color="#F0F0F0"/>
+					</mx:horizontalStroke>
+				</mx:GridLines>
+				<s:BorderContainer top="0" right="0" bottom="0" left="0" borderColor="#000000" backgroundAlpha="0"/>
+			</mx:backgroundElements>
+			
+			<mx:verticalAxis>
+				<mx:LinearAxis id="vertical" baseAtZero="false" minimum="{minimum}" maximum="{maximum}"/>
+			</mx:verticalAxis>
+			
+			<mx:horizontalAxis>
+				<mx:CategoryAxis id="horisontal" categoryField="dateString"/>
+			</mx:horizontalAxis>
+			
+			<mx:verticalAxisRenderers>
+				<mx:AxisRenderer axis="{vertical}" placement="right">
+					<mx:axisStroke>
+						<mx:SolidColorStroke color="#000000" weight="1" alpha="0"/>
+					</mx:axisStroke>
+					<mx:tickStroke>
+						<mx:SolidColorStroke color="#000000" weight="1" alpha="1"/>
+					</mx:tickStroke>
+					<mx:minorTickStroke>
+						<mx:SolidColorStroke color="#000000" weight="1" />
+					</mx:minorTickStroke>
+				</mx:AxisRenderer>
+			</mx:verticalAxisRenderers>
+			
+			<mx:horizontalAxisRenderers>
+				<mx:AxisRenderer axis="{horisontal}" canDropLabels="true" labelAlign="right">
+					<mx:axisStroke>
+						<mx:SolidColorStroke color="#F0F0F0" weight="1" alpha="0" />
+					</mx:axisStroke>
+					<mx:tickStroke>
+						<mx:SolidColorStroke color="#000000" weight="1" alpha="1"/>
+					</mx:tickStroke>
+				</mx:AxisRenderer>
+			</mx:horizontalAxisRenderers>
+			
+			<mx:series>
+				<mx:AreaSeries yField="close" displayName="{symbol}" left="-130" areaRenderer="com.vit.yahoobrowser.views.renderers.CompanyChartAreaRenderer">
+					<mx:areaFill>
+						<s:SolidColor color="#808080" alpha=".5"/>
+					</mx:areaFill>
+					<mx:areaStroke>
+						<mx:SolidColorStroke color="#808080" weight="1" alpha="1"/>
+					</mx:areaStroke>
+				</mx:AreaSeries>
+			</mx:series>
+		</mx:AreaChart>
+	</s:Group>
+
+</s:Group>

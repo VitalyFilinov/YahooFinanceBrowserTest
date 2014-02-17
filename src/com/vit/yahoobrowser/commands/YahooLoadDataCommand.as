@@ -16,7 +16,7 @@ package com.vit.yahoobrowser.commands
 		
 		override public function execute():void
 		{
-			dataService.load(new YahooDataServiceStrategy(event.dataType));
+			dataService.load(new YahooDataServiceStrategy(event.dataType, event.params));
 		}
 	}
 }

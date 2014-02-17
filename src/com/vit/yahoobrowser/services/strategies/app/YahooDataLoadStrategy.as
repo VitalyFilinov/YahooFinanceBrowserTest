@@ -32,5 +32,10 @@ package com.vit.yahoobrowser.services.strategies.app
 			throw new IllegalOperationError("parse method must be overriden!");
 			return null;
 		}
+		
+		public function setParams(params:Object):void
+		{
+			throw new IllegalOperationError("setParams method must be overriden!");
+		}
 	}
 }

@@ -1,11 +1,11 @@
 package com.vit.yahoobrowser.models
 {
 	import com.vit.yahoobrowser.events.YahooDataEvent;
+	import com.vit.yahoobrowser.events.YahooFavoritesEvent;
 	import com.vit.yahoobrowser.models.vo.ICompanyVO;
 	import com.vit.yahoobrowser.models.vo.IIndustryVO;
 	import com.vit.yahoobrowser.models.vo.ISectorVO;
 	import com.vit.yahoobrowser.models.vo.IndustryVO;
-	import com.vit.yahoobrowser.models.vo.SectorVO;
 	
 	import flash.events.Event;
 	import flash.events.IEventDispatcher;
@@ -23,39 +23,17 @@ package com.vit.yahoobrowser.models
 		private var currentCompany:ICompanyVO;
 		
 		private var favorites:Array = [];
+		private var tmpFavorites:Array;
 		
-		public function setSectors(data:Object):void
+		public function setIndustries(data:Object):void
 		{
 			sectors = data as Array;
-			eventDispatcher.dispatchEvent(new Event(YahooDataEvent.SECTORS_CHANGED));
+			eventDispatcher.dispatchEvent(new Event(YahooDataEvent.INDUSTRIES_CHANGED));
 		}
 		
-		public function getSectors():Array
+		public function getIndustries():Array
 		{
 			return sectors;
-		}
-		
-		public function resetSectors():void
-		{
-			var a:int = sectors.length;
-			var b:int;
-			while(a--)
-			{
-				sectors[a].isOpened = false;
-				b = sectors[a].industries.length;
-				while(b--)
-				{
-					sectors[a].industries[b].selected = false;
-				}
-			}
-		}
-		
-		public function setCurrentSector(sector:ISectorVO):void
-		{
-			
-			currentSector = sector;
-			
-			eventDispatcher.dispatchEvent(new Event(YahooDataEvent.CURRENT_SECTOR_CHANGED));
 		}
 		
 		public function setCurrentIndustry(industry:IIndustryVO):void
@@ -84,11 +62,7 @@ package com.vit.yahoobrowser.models
 			eventDispatcher.dispatchEvent(new Event(YahooDataEvent.CURRENT_COMPANY_CHANGED));
 		}
 		
-		public function addFavorites(items:Array):void
-		{
-			favorites = favorites.concat(items);
-			favorites.sortOn("name");
-		}
+		///////////////////////////////// SEARCH /////////////////////////////////
 		
 		public function getSearch(searchString:String):Array
 		{
@@ -137,6 +111,89 @@ package com.vit.yahoobrowser.models
 			currentSearch.reverse();
 			
 			return currentSearch;
+		}
+		
+		///////////////////////////////// FAVORITES /////////////////////////////////
+		
+		public function addFavorite(item:IIndustryVO):void
+		{
+			tmpFavorites ||= favorites.slice(0);
+			tmpFavorites[tmpFavorites.length] = item;
+		}
+		
+		public function removeFavorite(item:IIndustryVO, complete:Boolean = false):void
+		{
+			if(complete)
+			{
+				removeFavoriteFrom(favorites, item);
+				item.selected = false;
+				eventDispatcher.dispatchEvent(new YahooFavoritesEvent(YahooFavoritesEvent.CHANGED));
+			}
+			else
+			{
+				tmpFavorites ||= favorites.slice(0);
+				removeFavoriteFrom(tmpFavorites, item);
+			}
+		}
+		
+		private function removeFavoriteFrom(source:Array, item:IIndustryVO):void
+		{
+			var i:int = source.length;
+			while(i--)
+			{
+				if(source[i] == item)
+				{
+					source.splice(i,1);
+					return;
+				}
+			}
+		}
+		
+		public function saveFavorites():void
+		{
+			if(tmpFavorites == null) return; // favorites was not been changed
+			
+			var i:int = favorites.length;
+			while(i--)
+			{
+				favorites[i].selected = false;
+			}
+			
+			i = tmpFavorites.length;
+			while(i--)
+			{
+				tmpFavorites[i].selected = true;
+			}
+			
+			favorites = tmpFavorites.splice(0);
+			tmpFavorites = null;
+			
+			eventDispatcher.dispatchEvent(new YahooFavoritesEvent(YahooFavoritesEvent.CHANGED));
+		}
+		
+		public function resetFavorites():void
+		{
+			if(tmpFavorites == null) return; // favorites was not been changed
+			
+			var i:int = tmpFavorites.length;
+			while(i--)
+			{
+				tmpFavorites[i].selected = false;
+			}
+			
+			i = favorites.length;
+			while(i--)
+			{
+				favorites[i].selected = true;
+			}
+			
+			tmpFavorites = [];
+			tmpFavorites = null;
+		}
+		
+		public function getFavorites():Array
+		{
+			return favorites;
 		}
 	}
 }

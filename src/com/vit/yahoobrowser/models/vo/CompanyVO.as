@@ -1,29 +1,36 @@
 package com.vit.yahoobrowser.models.vo
 {
-	import com.vit.yahoobrowser.models.YahooDataTypes;
 
 	public class CompanyVO implements ICompanyVO
 	{
-		private var _selected:Boolean;
+		private var _symbol:String;
+		private var _name:String;
+		private var _isCurrent:Boolean;
 		
-		public function CompanyVO()
+		public function CompanyVO(symbol:String, name:String)
 		{
-			
+			_symbol = symbol;
+			_name = name;
 		}
 		
-		public function get selected():Boolean
+		public function get symbol():String
 		{
-			return _selected;
+			return _symbol;
 		}
 		
-		public function set selected(value:Boolean):void
+		public function get name():String
 		{
-			_selected = value;
+			return _name;
 		}
 		
-		public function get type():String
+		public function get isCurrent():Boolean
 		{
-			return YahooDataTypes.COMPANY;
+			return _isCurrent;
+		}
+		
+		public function set isCurrent(value:Boolean):void
+		{
+			_isCurrent = value;
 		}
 	}
 }

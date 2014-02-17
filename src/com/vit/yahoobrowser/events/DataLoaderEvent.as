@@ -1,7 +1,6 @@
 package com.vit.yahoobrowser.events
 {
 	import flash.events.Event;
-	import flash.net.URLLoader;
 	
 	public class DataLoaderEvent extends Event
 	{

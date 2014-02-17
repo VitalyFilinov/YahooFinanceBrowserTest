@@ -14,7 +14,7 @@ package com.vit.yahoobrowser.commands
 		
 		override public function execute():void
 		{
-			eventDispatcher.dispatchEvent(new YahooLoadDataEvent(YahooLoadDataEvent.LOAD_DATA, YahooLoaderDataTypes.SECTORS));
+			eventDispatcher.dispatchEvent(new YahooLoadDataEvent(YahooLoadDataEvent.LOAD_DATA, YahooLoaderDataTypes.INDUSTRIES));
 		}
 	}
 }

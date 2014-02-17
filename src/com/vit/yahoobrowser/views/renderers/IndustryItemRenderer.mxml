@@ -6,6 +6,7 @@
 				rollOver="rollOverHandler(event)"
 				rollOut="rollOutHandler(event)"
 				creationComplete="updateState(event)"
+				dataChange="updateState(event)"
 				width="100%">
 	
 	<s:states>
@@ -23,47 +24,41 @@
 	<fx:Script>
 		<![CDATA[
 			import com.vit.yahoobrowser.events.YahooDataEvent;
+			import com.vit.yahoobrowser.events.YahooFavoritesEvent;
 			import com.vit.yahoobrowser.models.vo.IIndustryVO;
-			import com.vit.yahoobrowser.models.vo.ISectorVO;
 			import com.vit.yahoobrowser.resources.Resources;
-			
-			[Bindable]
-			private var leftMargin:int;
 			
 			private var isOn:Boolean = false;
 			private var isMouseOver:Boolean = false;
 			private var isSector:Boolean = false;
 			
+			private var vo:IIndustryVO;
+			
 			override public function set data(value:Object):void
 			{
-				if(value is ISectorVO)
+				if(value == null)
 				{
-					super.data = value.name;
-					isSector = true;
-					isOn = ISectorVO(value).isOpened;
+					// TODO Why null???
+					return;
 				}
-				else if(value is IIndustryVO)
-				{
-					super.data = value.name;
-					isSector = false;
-					isOn = IIndustryVO(value).selected;
-				}
+				vo = value as IIndustryVO;
+				super.data = vo.name;
+				
 				updateState();
 			}
 			
 			protected function clickHandler(event:MouseEvent):void
 			{
-				isOn = !isOn;
-				updateState();
-				
 				if(isSector)
 				{
-					dispatchEvent(new YahooDataEvent(isOn? YahooDataEvent.SECTOR_OPEN : YahooDataEvent.SECTOR_CLOSE, true));
+					dispatchEvent(new YahooDataEvent(isOn? YahooDataEvent.SECTOR_CLOSE:YahooDataEvent.SECTOR_OPEN, true));
 				}
 				else
 				{
-					dispatchEvent(new YahooDataEvent(isOn? YahooDataEvent.INDUSTRY_CHECKED : YahooDataEvent.INDUSTRY_UNCHECKED, true));
+					dispatchEvent(new YahooFavoritesEvent(isOn? YahooFavoritesEvent.REMOVE:YahooFavoritesEvent.ADD, vo, true));
 				}
+				
+				updateState();
 			}
 			
 			protected function rollOverHandler(event:MouseEvent):void
@@ -80,6 +75,9 @@
 			
 			private function updateState(event:Event = null):void
 			{
+				isSector = vo.children && vo.children.length > 0;
+				isOn = isSector? vo.isOpened:vo.isFavorite;
+				
 				var newState:String = 
 					(isSector? "sector":"industry") +
 					(isMouseOver? "Over":"Out") +
@@ -107,7 +105,7 @@
 			 includeIn="sectorOverOff, sectorOutOff" click="clickHandler(event)"/>
 	<s:Image id="minusImg" source="{Resources.MINUS}" top="3"
 			 includeIn="sectorOverOn, sectorOutOn" click="clickHandler(event)"/>
-
+	
 	<s:Image id="yesImg" source="{Resources.CHECKBOX_YES}" top="1" right="4"
 			 includeIn="industryOverOn, industryOutOn" click="clickHandler(event)"/>
 	<s:Image id="noImg" source="{Resources.CHECKBOX_NO}" top="1" right="4"

@@ -1,19 +1,28 @@
 package com.vit.yahoobrowser
 {
+	import com.vit.yahoobrowser.commands.YahooCompanyChangeCommand;
 	import com.vit.yahoobrowser.commands.YahooFinanceBrowserInitCommand;
 	import com.vit.yahoobrowser.commands.YahooLoadDataCommand;
 	import com.vit.yahoobrowser.commands.YahooLoadedDataCommand;
-	import com.vit.yahoobrowser.commands.YahooFinanceBrowserInitCommand;
-	
 	import com.vit.yahoobrowser.events.DataLoaderEvent;
+	import com.vit.yahoobrowser.events.YahooCompanyEvent;
 	import com.vit.yahoobrowser.events.YahooLoadDataEvent;
-	import com.vit.yahoobrowser.models.YahooDataModel;
+	import com.vit.yahoobrowser.models.IYahooChartModel;
+	import com.vit.yahoobrowser.models.IYahooDataModel;
+	import com.vit.yahoobrowser.models.YahooChartModel;
+	import com.vit.yahoobrowser.models.YahooDataListModel;
 	import com.vit.yahoobrowser.services.app.IYahooDataSertvice;
 	import com.vit.yahoobrowser.services.app.YahooDataService;
+	import com.vit.yahoobrowser.views.CompaniesListMediator;
+	import com.vit.yahoobrowser.views.CompaniesListView;
+	import com.vit.yahoobrowser.views.CompanyChartManagerMediator;
+	import com.vit.yahoobrowser.views.CompanyChartManagerView;
+	import com.vit.yahoobrowser.views.CompanyChartMediator;
+	import com.vit.yahoobrowser.views.CompanyChartView;
+	import com.vit.yahoobrowser.views.IndustryListMediator;
+	import com.vit.yahoobrowser.views.IndustryListView;
 	import com.vit.yahoobrowser.views.IndustryManagerMediator;
 	import com.vit.yahoobrowser.views.IndustryManagerView;
-	import com.vit.yahoobrowser.views.SectorsListMediator;
-	import com.vit.yahoobrowser.views.SectorsListView;
 	
 	import flash.events.Event;
 	import flash.events.IEventDispatcher;
@@ -45,15 +54,20 @@ package com.vit.yahoobrowser
 		{
 			commandMap.map(Event.INIT).toCommand(YahooFinanceBrowserInitCommand);
 			commandMap.map(YahooLoadDataEvent.LOAD_DATA, YahooLoadDataEvent).toCommand(YahooLoadDataCommand);
+			commandMap.map(YahooCompanyEvent.COMPANY_CHANGED, YahooCompanyEvent).toCommand(YahooCompanyChangeCommand);
 			
 			commandMap.map(DataLoaderEvent.EVENT_DATA_LOADED, DataLoaderEvent).toCommand(YahooLoadedDataCommand);
 			commandMap.map(DataLoaderEvent.EVENT_DATA_FAILED, DataLoaderEvent).toCommand(YahooLoadedDataCommand);
 			
 			injector.map(IYahooDataSertvice).toSingleton(YahooDataService);
-			injector.map(YahooDataModel).asSingleton();
+			injector.map(IYahooDataModel).toSingleton(YahooDataListModel);
+			injector.map(IYahooChartModel).toSingleton(YahooChartModel);
 			
 			mediatorMap.map(IndustryManagerView).toMediator(IndustryManagerMediator);
-			//mediatorMap.map(SectorsListView).toMediator(SectorsListMediator);
+			mediatorMap.map(IndustryListView).toMediator(IndustryListMediator);
+			mediatorMap.map(CompaniesListView).toMediator(CompaniesListMediator);
+			mediatorMap.map(CompanyChartView).toMediator(CompanyChartMediator);
+			mediatorMap.map(CompanyChartManagerView).toMediator(CompanyChartManagerMediator);
 			
 			context.afterInitializing(init);
 		}

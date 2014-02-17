@@ -13,5 +13,8 @@ package com.vit.yahoobrowser.resources
 		
 		[Embed (source="../../../../../libs/checkbox_no.png" )]
 		public static const CHECKBOX_NO:Class;
+		
+		[Embed (source="../../../../../libs/delete.png" )]
+		public static const DELETE:Class;
 	}
 }

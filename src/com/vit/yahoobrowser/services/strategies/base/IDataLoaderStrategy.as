@@ -7,5 +7,6 @@ package com.vit.yahoobrowser.services.strategies.base
 		function get id():String;
 		function get request():URLRequest;
 		function parse(data:Object):Object;
+		function setParams(params:Object):void;
 	}
 }

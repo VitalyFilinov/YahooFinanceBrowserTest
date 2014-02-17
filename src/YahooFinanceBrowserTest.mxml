@@ -4,7 +4,7 @@
 			   xmlns:robotlegs = "robotlegs.bender.mxml.*"
 			   xmlns:mvcs = "robotlegs.bender.bundles.mvcs.*"
 			   xmlns:app = "com.vit.yahoobrowser.*"
-			   minWidth="800" minHeight="600" width="800" height="600"
+			   minWidth="800" minHeight="600" width="100%" height="100%"
 			   xmlns:views="com.vit.yahoobrowser.views.*" creationComplete="init()">
 	
 	<fx:Script>
@@ -20,8 +20,16 @@
 		</robotlegs:ContextBuilderTag>
 	</fx:Declarations>
 	
-	<s:BorderContainer id="favoriteIndustries" width="200" height="350" borderColor="0x000000" top="{DEFAULT_SPACE + industryManager.sectorListY}" left="{DEFAULT_SPACE}">
-	</s:BorderContainer>
-	<views:IndustryManagerView id="industryManager" top="{DEFAULT_SPACE}" left="{DEFAULT_SPACE}" sectorListHeight="{favoriteIndustries.height}"/>
+	<views:IndustryManagerView id="industryManager" top="{DEFAULT_SPACE}" left="{DEFAULT_SPACE}"/>
+	<s:Group id="leftSection" top="{industryManager.y + industryManager.height + DEFAULT_SPACE}" bottom="{DEFAULT_SPACE}" left="{DEFAULT_SPACE}" width="200">
+		<s:layout>
+			<s:VerticalLayout gap="{DEFAULT_SPACE}"/>
+		</s:layout>
+		<views:IndustryListView width="100%" height="50%"/>
+		<views:CompaniesListView width="100%" height="50%"/>
+	</s:Group>
+	
+	<views:CompanyChartView top="{industryManager.y + industryManager.height + DEFAULT_SPACE - 1}" right="{DEFAULT_SPACE}" bottom="{DEFAULT_SPACE}" left="220"/>
+	<views:CompanyChartManagerView top="{DEFAULT_SPACE}" right="{DEFAULT_SPACE}" bottom="{industryManager.y + industryManager.height}" left="220"/>
 
 </s:Application>

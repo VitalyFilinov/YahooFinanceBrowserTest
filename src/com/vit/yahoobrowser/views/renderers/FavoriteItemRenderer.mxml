@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				autoDrawBackground="false"
+				rollOver="rollOverHandler(event)"
+				rollOut="rollOutHandler(event)"
+				creationComplete="updateState(event)"
+				dataChange="updateState(event)"
+				width="100%">
+	
+	<s:states>
+		<s:State name = "normalOut" stateGroups="out"/>
+		<s:State name = "normalOver" stateGroups="over"/>
+		
+		<s:State name = "selectedOut" stateGroups="out, selected"/>
+		<s:State name = "selectedOver" stateGroups="over, selected"/>
+	</s:states>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.vit.yahoobrowser.events.YahooFavoritesEvent;
+			import com.vit.yahoobrowser.events.YahooIndustryEvent;
+			import com.vit.yahoobrowser.models.vo.IIndustryVO;
+			import com.vit.yahoobrowser.resources.Resources;
+			
+			private var vo:IIndustryVO;
+			
+			private var isSelected:Boolean = false;
+			private var isMouseOver:Boolean = false;
+			
+			override public function set data(value:Object):void
+			{
+				if(!value) return; // TODO Why null?
+				
+				vo = value as IIndustryVO;
+				super.data = vo.name;
+			}
+			
+			protected function clickHandler(event:MouseEvent):void
+			{
+				dispatchEvent(new YahooFavoritesEvent(YahooFavoritesEvent.COMPLETE_REMOVE, vo, true));
+			}
+			
+			protected function onIndustryClick(event:MouseEvent):void
+			{
+				dispatchEvent(new YahooIndustryEvent(YahooIndustryEvent.INDUSTRY_SELECTED, vo, true));
+			}
+			
+			protected function rollOverHandler(event:MouseEvent):void
+			{
+				isMouseOver = true;
+				updateState();
+			}
+			
+			protected function rollOutHandler(event:MouseEvent):void
+			{
+				isMouseOver = false;
+				updateState();
+			}
+			
+			private function updateState(event:Event = null):void
+			{
+				isSelected = vo.isCurrent;
+				
+				var newState:String = 
+					(isSelected? "selected":"normal") +
+					(isMouseOver? "Over":"Out");
+				
+				setCurrentState(newState);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:Rect top="-1" bottom="-1" left="0" right="0" includeIn="selected">
+		<s:fill>
+			<s:SolidColor color="#BFBFBF"/>
+		</s:fill>
+	</s:Rect>
+	
+	<s:Group width="100%" height="100%" click="onIndustryClick(event)">
+		<s:Rect top="-1" bottom="-1" left="0" right="0" includeIn="over">
+			<s:fill>
+				<s:SolidColor color="#808080"/>
+			</s:fill>
+		</s:Rect>
+	</s:Group>
+
+	
+	<s:Label id="itemLabel" text="{data}" fontSize="12"
+			 color.out="#000000"
+			 color.over="#FFFFFF"
+			 top="4" width="100%" paddingLeft="4" paddingRight = "15" mouseChildren="false" mouseEnabled="false"/>
+	
+	<s:Image id="deleteImg" source="{Resources.DELETE}" includeIn="normalOver, selectedOver" bottom="2" right="4" click="clickHandler(event)"/>
+	
+</s:ItemRenderer>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:views="com.vit.yahoobrowser.views.*"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="100%" height="100%">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.CalendarLayoutChangeEvent;
+			
+			import spark.events.TextOperationEvent;
+			
+			protected function dateChangedHandler(event:CalendarLayoutChangeEvent):void
+			{
+				if(event.currentTarget == fromDate)
+				{
+					trace("FROM DATE:", event.newDate.toDateString());
+				}
+				else if(event.currentTarget == toDate)
+				{
+					trace("TO DATE:", event.newDate.toDateString());
+				}
+			}
+			
+			protected function symbolChangedHandler(event:TextOperationEvent):void
+			{
+				if(symbol.value.length > 2 || symbol.value.length == 0)
+				{
+					trace(symbol.value);
+					//dispatchEvent(new YahooDataSearchEvent(YahooDataSearchEvent.SEARCH, search.value));
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:Group horizontalCenter="0">
+		<s:Group top="3">
+			<s:layout>
+				<s:HorizontalLayout gap="20"/>
+			</s:layout>
+			
+			<s:Group>
+				<s:layout>
+					<s:HorizontalLayout gap="3" verticalAlign="middle"/>
+				</s:layout>
+				<s:Label text="Symbol:" verticalAlign="middle" fontSize="13"/>
+				<views:SearchTextInput id="symbol" left="2" right="30" top="2" width="100" height="26" change="symbolChangedHandler(event)"/>
+			</s:Group>
+			
+			<s:Group>
+				<s:layout>
+					<s:HorizontalLayout gap="3" verticalAlign="middle"/>
+				</s:layout>
+				<s:Label text="From:" verticalAlign="middle" fontSize="13"/>
+				<mx:DateField id="fromDate" disabledDays="[0,6]" width="120" height="26" change="dateChangedHandler(event)"/>
+			</s:Group>
+			
+			<s:Group>
+				<s:layout>
+					<s:HorizontalLayout gap="3" verticalAlign="middle"/>
+				</s:layout>
+				<s:Label text="To:" verticalAlign="middle" fontSize="13"/>
+				<mx:DateField id="toDate" disabledDays="[0,6]" width="120" height="26" change="dateChangedHandler(event)"/>
+			</s:Group>
+			
+		</s:Group>
+	</s:Group>
+</s:Group>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				   xmlns:s="library://ns.adobe.com/flex/spark" 
+				   xmlns:mx="library://ns.adobe.com/flex/mx" borderColor="#000000" height="100%" width="100%">
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayList;
+			import mx.collections.IList;
+			
+			[Bindable]
+			private var companiesDataProvider:IList = new ArrayList();
+			
+			public function setDataProvider(provider:ArrayList):void
+			{
+				companiesDataProvider = provider;
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Scroller horizontalScrollPolicy="off" top="4" bottom="4" left="4" right="4">
+		<s:DataGroup id="companiesList" height="100%" left="0" right="4"
+					 dataProvider="{companiesDataProvider}"
+					 itemRenderer="com.vit.yahoobrowser.views.renderers.CompanyItemRenderer">
+			<s:layout>
+				<s:VerticalLayout gap="1" useVirtualLayout="true"/>
+			</s:layout>
+		</s:DataGroup>
+	</s:Scroller>
+</s:BorderContainer>
