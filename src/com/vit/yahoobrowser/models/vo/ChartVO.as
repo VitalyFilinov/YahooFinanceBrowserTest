@@ -18,15 +18,30 @@ package com.vit.yahoobrowser.models.vo
 			_maximum = maximum;
 			_quotes = quotes;
 		}
+		
+		public function set symbol(value:String):void
+		{
+			_symbol= value;
+		}
 
 		public function get symbol():String
 		{
 			return _symbol;
 		}
+		
+		public function set startDate(value:Date):void
+		{
+			_startDate = value;
+		}
 
 		public function get startDate():Date
 		{
 			return _startDate;
+		}
+		
+		public function set endDate(value:Date):void
+		{
+			_endDate = value;
 		}
 
 		public function get endDate():Date

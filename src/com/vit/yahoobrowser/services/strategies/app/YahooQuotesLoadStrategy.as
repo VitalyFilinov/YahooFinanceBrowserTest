@@ -3,6 +3,8 @@ package com.vit.yahoobrowser.services.strategies.app
 	import com.vit.yahoobrowser.models.YahooLoaderDataTypes;
 	import com.vit.yahoobrowser.models.vo.ChartVO;
 	import com.vit.yahoobrowser.models.vo.QuoteVO;
+	
+	import mx.formatters.DateFormatter;
 
 	public class YahooQuotesLoadStrategy extends YahooDataLoadStrategy
 	{
@@ -12,7 +14,13 @@ package com.vit.yahoobrowser.services.strategies.app
 		
 		override protected function get query():String
 		{
-			return 'select * from yahoo.finance.historicaldata where symbol="' + companySymbol + '" and startDate="' + startDate +'" and endDate="' + endDate + '"';
+			var dateFormatter:DateFormatter = new DateFormatter();
+				dateFormatter.formatString = "YYYY-MM-DD";
+			
+			var startDateString:String = dateFormatter.format(startDate);
+			var endDateString:String = dateFormatter.format(endDate);
+			
+			return 'select * from yahoo.finance.historicaldata where symbol="' + companySymbol + '" and startDate="' + startDateString +'" and endDate="' + endDateString + '"';
 		}
 		
 		override public function get id():String
@@ -27,7 +35,7 @@ package com.vit.yahoobrowser.services.strategies.app
 			if(!json || !json.query || !json.query.results || !json.query.results.quote)
 			{
 				trace(this, "parse: ERROR >> Wrong object in data!");
-				return new ChartVO("Error", null, null, 0, 0, null);
+				return new ChartVO(companySymbol, startDate, endDate, 0, 0, []);
 			}
 			
 			var quotesData:Array = json.query.results.quote as Array;

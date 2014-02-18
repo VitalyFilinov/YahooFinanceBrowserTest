@@ -1,9 +1,14 @@
 package com.vit.yahoobrowser.commands
 {
 	import com.vit.yahoobrowser.events.DataLoaderEvent;
+	import com.vit.yahoobrowser.events.YahooChartEvent;
+	import com.vit.yahoobrowser.events.YahooCompanyEvent;
+	import com.vit.yahoobrowser.events.YahooIndustryEvent;
 	import com.vit.yahoobrowser.models.IYahooChartModel;
 	import com.vit.yahoobrowser.models.IYahooDataModel;
 	import com.vit.yahoobrowser.models.YahooLoaderDataTypes;
+	
+	import flash.events.IEventDispatcher;
 	
 	import robotlegs.bender.bundles.mvcs.Command;
 	
@@ -17,6 +22,9 @@ package com.vit.yahoobrowser.commands
 		
 		[Inject]
 		public var event:DataLoaderEvent;
+		
+		[Inject]
+		public var eventDispatcher:IEventDispatcher;
 		
 		override public function execute():void
 		{
@@ -37,7 +45,18 @@ package com.vit.yahoobrowser.commands
 			}
 			else if(event.type == DataLoaderEvent.EVENT_DATA_FAILED)
 			{
-				trace(this, "ERROR >> ", event.errorMessage);	
+				if(event.loaderID == YahooLoaderDataTypes.INDUSTRIES)
+				{
+					eventDispatcher.dispatchEvent(new YahooIndustryEvent(YahooIndustryEvent.CURRENT_INDUSTRY_ERROR));
+				}
+				else if(event.loaderID == YahooLoaderDataTypes.COMPANIES)
+				{
+					eventDispatcher.dispatchEvent(new YahooCompanyEvent(YahooCompanyEvent.COMPANIES_ERROR));
+				}
+				else if(event.loaderID == YahooLoaderDataTypes.QUOTES)
+				{
+					eventDispatcher.dispatchEvent(new YahooChartEvent(YahooChartEvent.CHART_DATA_ERROR));
+				}	
 			}
 		}
 		

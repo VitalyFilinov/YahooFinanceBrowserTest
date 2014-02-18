@@ -12,7 +12,7 @@ package com.vit.yahoobrowser.models.vo
 		private var _volume:Number;
 		private var _adjClose:Number;
 		
-		private var dateFormatter:DateFormatter;
+		private var _dateString:String;
 		
 		public function QuoteVO(date:Date, open:Number, high:Number, low:Number, close:Number, volume:Number, adjClose:Number)
 		{
@@ -32,12 +32,13 @@ package com.vit.yahoobrowser.models.vo
 		
 		public function get dateString():String
 		{
-			if(!dateFormatter)
+			if(!_dateString)
 			{
-				dateFormatter = new DateFormatter();
+				var dateFormatter:DateFormatter = new DateFormatter();
 				dateFormatter.formatString = "YYYY-MM-DD";
+				_dateString = dateFormatter.format(_date);
 			}
-			return dateFormatter.format(_date);
+			return _dateString;
 		}
 
 		public function get open():Number

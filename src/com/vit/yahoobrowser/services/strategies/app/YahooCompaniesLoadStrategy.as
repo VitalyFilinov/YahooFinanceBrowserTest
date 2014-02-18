@@ -22,17 +22,19 @@ package com.vit.yahoobrowser.services.strategies.app
 		override public function parse(data:Object):Object
 		{
 			var json:Object = JSON.parse(data as String);
+			var companiesData:Array;
+			var error:Boolean = false;
 			
 			if(!json || !json.query || !json.query.results || !json.query.results.industry)
 			{
 				trace(this, "parse: ERROR >> Wrong object in data!");
-				return [];
+				error = true;
+				companiesData = [];
 			}
-			
-			var companiesData:Array;
-			if(!json.query.results.industry.company)
+			else if(!json.query.results.industry.company)
 			{
 				companiesData = [];
+				error = true;
 				trace(this, "No companies included in industry", json.query.results.industry.id);
 			}
 			else if(json.query.results.industry.company is Array)
@@ -52,7 +54,7 @@ package com.vit.yahoobrowser.services.strategies.app
 				companies.addItem(new CompanyVO(companiesData[a].symbol, companiesData[a].name));
 			}
 			
-			return {data:companies, id:json.query.results.industry.id};
+			return {data:companies, id:json.query.results.industry.id, error:error};
 		}
 		
 		override public function setParams(params:Object):void

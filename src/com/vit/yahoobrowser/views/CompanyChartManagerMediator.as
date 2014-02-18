@@ -16,8 +16,16 @@ package com.vit.yahoobrowser.views
 		
 		override public function initialize():void
 		{
-			//addContextListener(YahooChartEvent.CHART_DATA_CHANGED, onChartDataChanged, YahooChartEvent);
-			//addContextListener(YahooCompanyEvent.COMPANY_CHANGED, onCompanyChanged, YahooCompanyEvent);
+			addContextListener(YahooCompanyEvent.COMPANY_CHANGED, onCompanySelected, YahooCompanyEvent);
+			
+			addViewListener(YahooChartEvent.CHART_DATA_UPDATE, dispatch, YahooChartEvent);
+			
+			view.setDates(chartModel.getStartDate(), chartModel.getEndDate());
+		}
+		
+		private function onCompanySelected(event:YahooCompanyEvent):void
+		{
+			view.setSymbol(event.vo.symbol);
 		}
 	}
 }

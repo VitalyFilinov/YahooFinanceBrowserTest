@@ -8,6 +8,8 @@ package com.vit.yahoobrowser.events
 	{
 		public static const INDUSTRIES_CHANGED:String = "data_industries_changed";
 		public static const CURRENT_INDUSTRY_CHANGED:String = "data_current_industry_changed";
+		public static const CURRENT_INDUSTRY_ERROR:String = "data_current_industry_error";
+		
 		public static const INDUSTRY_SELECTED:String = "list_industry_selected";
 		
 		private var _vo:IIndustryVO;

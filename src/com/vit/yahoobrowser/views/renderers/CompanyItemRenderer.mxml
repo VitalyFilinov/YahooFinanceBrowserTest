@@ -36,7 +36,7 @@
 			
 			protected function onCompanyClick(event:MouseEvent):void
 			{
-				dispatchEvent(new YahooCompanyEvent(YahooCompanyEvent.COMPANY_SELECTED, vo, true));
+				dispatchEvent(new YahooCompanyEvent(YahooCompanyEvent.COMPANY_SELECTED, vo, false, true));
 			}
 			
 			protected function rollOverHandler(event:MouseEvent):void

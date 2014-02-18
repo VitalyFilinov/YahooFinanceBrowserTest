@@ -16,5 +16,11 @@ package com.vit.yahoobrowser.resources
 		
 		[Embed (source="../../../../../libs/delete.png" )]
 		public static const DELETE:Class;
+		
+		[Embed (source="../../../../../libs/btn_open.png" )]
+		public static const OPEN:Class;
+		
+		[Embed (source="../../../../../libs/btn_close.png" )]
+		public static const CLOSE:Class;
 	}
 }

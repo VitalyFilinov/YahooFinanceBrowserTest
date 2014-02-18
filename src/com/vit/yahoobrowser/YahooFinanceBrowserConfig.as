@@ -1,16 +1,23 @@
 package com.vit.yahoobrowser
 {
+	import com.vit.yahoobrowser.commands.YahooChartDataChangedCommand;
+	import com.vit.yahoobrowser.commands.YahooChartDataUpdateCommand;
 	import com.vit.yahoobrowser.commands.YahooCompanyChangeCommand;
 	import com.vit.yahoobrowser.commands.YahooFinanceBrowserInitCommand;
+	import com.vit.yahoobrowser.commands.YahooIndustrySelectedCommand;
 	import com.vit.yahoobrowser.commands.YahooLoadDataCommand;
 	import com.vit.yahoobrowser.commands.YahooLoadedDataCommand;
+	import com.vit.yahoobrowser.commands.YahooSearchCommand;
 	import com.vit.yahoobrowser.events.DataLoaderEvent;
+	import com.vit.yahoobrowser.events.YahooChartEvent;
 	import com.vit.yahoobrowser.events.YahooCompanyEvent;
+	import com.vit.yahoobrowser.events.YahooDataSearchEvent;
+	import com.vit.yahoobrowser.events.YahooIndustryEvent;
 	import com.vit.yahoobrowser.events.YahooLoadDataEvent;
 	import com.vit.yahoobrowser.models.IYahooChartModel;
 	import com.vit.yahoobrowser.models.IYahooDataModel;
 	import com.vit.yahoobrowser.models.YahooChartModel;
-	import com.vit.yahoobrowser.models.YahooDataListModel;
+	import com.vit.yahoobrowser.models.YahooDataModel;
 	import com.vit.yahoobrowser.services.app.IYahooDataSertvice;
 	import com.vit.yahoobrowser.services.app.YahooDataService;
 	import com.vit.yahoobrowser.views.CompaniesListMediator;
@@ -53,14 +60,23 @@ package com.vit.yahoobrowser
 		public function configure():void
 		{
 			commandMap.map(Event.INIT).toCommand(YahooFinanceBrowserInitCommand);
+			
 			commandMap.map(YahooLoadDataEvent.LOAD_DATA, YahooLoadDataEvent).toCommand(YahooLoadDataCommand);
-			commandMap.map(YahooCompanyEvent.COMPANY_CHANGED, YahooCompanyEvent).toCommand(YahooCompanyChangeCommand);
 			
 			commandMap.map(DataLoaderEvent.EVENT_DATA_LOADED, DataLoaderEvent).toCommand(YahooLoadedDataCommand);
 			commandMap.map(DataLoaderEvent.EVENT_DATA_FAILED, DataLoaderEvent).toCommand(YahooLoadedDataCommand);
 			
+			commandMap.map(YahooIndustryEvent.INDUSTRY_SELECTED, YahooIndustryEvent).toCommand(YahooIndustrySelectedCommand);
+			
+			commandMap.map(YahooCompanyEvent.COMPANY_CHANGED, YahooCompanyEvent).toCommand(YahooCompanyChangeCommand);
+			
+			commandMap.map(YahooDataSearchEvent.SEARCH, YahooDataSearchEvent).toCommand(YahooSearchCommand);
+			
+			commandMap.map(YahooChartEvent.CHART_DATA_UPDATE, YahooChartEvent).toCommand(YahooChartDataUpdateCommand);
+			commandMap.map(YahooChartEvent.CHART_DATA_CHANGED, YahooChartEvent).toCommand(YahooChartDataChangedCommand);
+			
 			injector.map(IYahooDataSertvice).toSingleton(YahooDataService);
-			injector.map(IYahooDataModel).toSingleton(YahooDataListModel);
+			injector.map(IYahooDataModel).toSingleton(YahooDataModel);
 			injector.map(IYahooChartModel).toSingleton(YahooChartModel);
 			
 			mediatorMap.map(IndustryManagerView).toMediator(IndustryManagerMediator);

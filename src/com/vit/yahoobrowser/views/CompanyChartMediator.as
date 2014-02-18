@@ -18,16 +18,25 @@ package com.vit.yahoobrowser.views
 		{
 			addContextListener(YahooChartEvent.CHART_DATA_CHANGED, onChartDataChanged, YahooChartEvent);
 			addContextListener(YahooCompanyEvent.COMPANY_CHANGED, onCompanyChanged, YahooCompanyEvent);
+			
+			addContextListener(YahooChartEvent.CHART_DATA_UPDATE, onChartUpdate, YahooChartEvent);
+		}
+		
+		private function onChartUpdate(event:YahooChartEvent):void
+		{
+			view.setLoading();
 		}
 		
 		private function onCompanyChanged(event:YahooCompanyEvent):void
 		{
-			//view.setLoading();
+			view.setLoading();
+			view.setSymbol(event.vo.symbol);
 		}
 		
 		private function onChartDataChanged(event:YahooChartEvent):void
 		{
 			view.setChartData(chartModel.getChartData());
+			view.setSymbol(event.symbol);
 		}
 	}
 }

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:views="com.vit.yahoobrowser.views.*">
+	<fx:Script>
+		<![CDATA[
+			
+			[Embed (source="../../../../../libs/loader.swf" )]
+			[Bindable]
+			public var LOADER:Class;
+			
+			private var loaderMC:MovieClip;
+			private var isPlaying:Boolean = false;
+			
+			public function play():void
+			{
+				isPlaying = true;
+				if(loaderMC)
+				{
+					loaderMC.play();
+				}
+				
+			}
+			
+			public function stop():void
+			{
+				isPlaying = false;
+				if(loaderMC)
+				{
+					loaderMC.stop();
+				}
+			}
+			
+			private function initLoader():void{
+				loaderMC = loader.content as MovieClip;
+				if(isPlaying)
+				{
+					loaderMC.play();
+				}
+				else
+				{
+					loaderMC.stop();
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:Graphic cacheAsBitmap="true" horizontalCenter="0" verticalCenter="0" mask="{loader}" alpha=".75">
+		<s:Ellipse width="60" height="60">
+			<s:fill>
+				<s:SolidColor color="#808080"/>
+			</s:fill>
+		</s:Ellipse>
+	</s:Graphic>
+	<mx:SWFLoader id="loader" source="{LOADER}" complete="initLoader()" cacheAsBitmap="true"/>
+		
+	
+</s:Group>

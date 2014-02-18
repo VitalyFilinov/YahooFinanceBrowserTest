@@ -15,7 +15,12 @@ package com.vit.yahoobrowser.models
 		
 		function setCurrentIndustry(industry:IIndustryVO):void;
 		function setCurrentCompany(company:ICompanyVO):void;
+		function getCurrentCompany():ICompanyVO;
+		function setCurrentCompanyBySymbol(symbol:String):void;
+			
 		function getSearch(searchString:String):ArrayList;
+		function clearSearch():void;
+		
 		function addFavorite(item:IIndustryVO):void;
 		function removeFavorite(item:IIndustryVO, complete:Boolean = false):void;
 		function saveFavorites():void;

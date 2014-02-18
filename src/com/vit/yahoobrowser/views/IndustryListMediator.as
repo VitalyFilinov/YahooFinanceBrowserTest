@@ -1,11 +1,13 @@
 package com.vit.yahoobrowser.views
 {
+	import com.vit.yahoobrowser.events.DataLoaderEvent;
 	import com.vit.yahoobrowser.events.YahooDataEvent;
 	import com.vit.yahoobrowser.events.YahooDataSearchEvent;
 	import com.vit.yahoobrowser.events.YahooFavoritesEvent;
 	import com.vit.yahoobrowser.events.YahooIndustryEvent;
 	import com.vit.yahoobrowser.events.YahooViewEvent;
 	import com.vit.yahoobrowser.models.IYahooDataModel;
+	import com.vit.yahoobrowser.models.YahooLoaderDataTypes;
 	
 	import mx.collections.ArrayList;
 	
@@ -30,16 +32,26 @@ package com.vit.yahoobrowser.views
 			addViewListener(YahooDataEvent.SECTOR_OPEN, onSectorOpen, YahooDataEvent);
 			addViewListener(YahooDataEvent.SECTOR_CLOSE, onSectorClose, YahooDataEvent);
 			
-			addViewListener(YahooIndustryEvent.INDUSTRY_SELECTED, onIndustrySelected, YahooIndustryEvent);
+			addViewListener(YahooIndustryEvent.INDUSTRY_SELECTED, dispatch, YahooIndustryEvent);
 			
 			addContextListener(YahooIndustryEvent.INDUSTRIES_CHANGED, setIndustries, YahooIndustryEvent);
 			addContextListener(YahooDataSearchEvent.SEARCH, setSearch, YahooDataSearchEvent);
 			addContextListener(YahooFavoritesEvent.CHANGED, setFavorites, YahooFavoritesEvent);
 			
 			addContextListener(YahooViewEvent.INVOKE_INDUSTRY_BROWSER, onIndustryBrowserInvoke, YahooViewEvent);
+			addContextListener(DataLoaderEvent.EVENT_DATA_LOADED, onDataLoaded, DataLoaderEvent);
 			
 			setIndustries();
 			setFavorites();
+		}
+		
+		private function onDataLoaded(event:DataLoaderEvent):void
+		{
+			if(event.loaderID == YahooLoaderDataTypes.INDUSTRIES)
+			{
+				view.setDataLoaded();
+				removeContextListener(DataLoaderEvent.EVENT_DATA_LOADED, onDataLoaded, DataLoaderEvent);
+			}
 		}
 		
 		private function onIndustrySelected(event:YahooIndustryEvent):void

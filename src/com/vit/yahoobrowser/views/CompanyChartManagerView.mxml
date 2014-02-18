@@ -6,29 +6,29 @@
 		 width="100%" height="100%">
 	<fx:Script>
 		<![CDATA[
+			import com.vit.yahoobrowser.events.YahooChartEvent;
+			
 			import mx.events.CalendarLayoutChangeEvent;
 			
 			import spark.events.TextOperationEvent;
 			
-			protected function dateChangedHandler(event:CalendarLayoutChangeEvent):void
+			protected function changedHandler():void
 			{
-				if(event.currentTarget == fromDate)
+				if(symbol.text.length > 2 || symbol.text.length == 0)
 				{
-					trace("FROM DATE:", event.newDate.toDateString());
-				}
-				else if(event.currentTarget == toDate)
-				{
-					trace("TO DATE:", event.newDate.toDateString());
+					dispatchEvent(new YahooChartEvent(YahooChartEvent.CHART_DATA_UPDATE, symbol.text, startDate.selectedDate, endDate.selectedDate));
 				}
 			}
 			
-			protected function symbolChangedHandler(event:TextOperationEvent):void
+			public function setDates(_startDate:Date, _endDate:Date):void
 			{
-				if(symbol.value.length > 2 || symbol.value.length == 0)
-				{
-					trace(symbol.value);
-					//dispatchEvent(new YahooDataSearchEvent(YahooDataSearchEvent.SEARCH, search.value));
-				}
+				startDate.selectedDate = _startDate;
+				endDate.selectedDate = _endDate;
+			}
+			
+			public function setSymbol(_symbol:String):void
+			{
+				symbol.text = _symbol;
 			}
 			
 		]]>
@@ -48,7 +48,7 @@
 					<s:HorizontalLayout gap="3" verticalAlign="middle"/>
 				</s:layout>
 				<s:Label text="Symbol:" verticalAlign="middle" fontSize="13"/>
-				<views:SearchTextInput id="symbol" left="2" right="30" top="2" width="100" height="26" change="symbolChangedHandler(event)"/>
+				<views:SearchTextInput id="symbol" left="2" right="30" top="2" width="100" height="26" change="changedHandler()"/>
 			</s:Group>
 			
 			<s:Group>
@@ -56,7 +56,7 @@
 					<s:HorizontalLayout gap="3" verticalAlign="middle"/>
 				</s:layout>
 				<s:Label text="From:" verticalAlign="middle" fontSize="13"/>
-				<mx:DateField id="fromDate" disabledDays="[0,6]" width="120" height="26" change="dateChangedHandler(event)"/>
+				<mx:DateField id="startDate" width="120" height="26" change="changedHandler()"/>
 			</s:Group>
 			
 			<s:Group>
@@ -64,7 +64,7 @@
 					<s:HorizontalLayout gap="3" verticalAlign="middle"/>
 				</s:layout>
 				<s:Label text="To:" verticalAlign="middle" fontSize="13"/>
-				<mx:DateField id="toDate" disabledDays="[0,6]" width="120" height="26" change="dateChangedHandler(event)"/>
+				<mx:DateField id="endDate" width="120" height="26" change="changedHandler()"/>
 			</s:Group>
 			
 		</s:Group>

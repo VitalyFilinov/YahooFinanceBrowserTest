@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SparkButtonSkin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+             xmlns:s="library://ns.adobe.com/flex/spark" 
+             xmlns:fb="http://ns.adobe.com/flashbuilder/2009"
+             minWidth="21" minHeight="21" 
+             alpha.disabled="0.5">
+     
+    <fx:Metadata>
+        <![CDATA[ 
+        	[HostComponent("com.vit.yahoobrowser.views.IndustryManagerOpenButton")]
+        ]]>
+    </fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import com.vit.yahoobrowser.resources.Resources;
+		]]>
+	</fx:Script>
+
+    <s:states>
+		<s:State name="disabled" />
+		<s:State name="disabledAndSelected" />
+		<s:State name="down" />
+		<s:State name="downAndSelected" />
+		<s:State name="over" />
+		<s:State name="overAndSelected" />
+		<s:State name="up" />
+		<s:State name="upAndSelected" />
+    </s:states>
+    
+    <s:Rect id="border" left="0" right="0" top="0" bottom="0">
+        <s:stroke>
+           <s:SolidColorStroke color="#000000"/>
+        </s:stroke>
+		<s:fill>
+			<s:SolidColor color="#FFFFFF" alpha=".25"/>
+		</s:fill>
+    </s:Rect>
+	
+	<s:Rect id="fill" left="2" right="2" top="2" bottom="2" includeIn="up, upAndSelected">
+		<s:fill>
+			<s:SolidColor color="#808080" alpha=".5"/>
+		</s:fill>
+	</s:Rect>
+	
+	<s:Rect id="fillOver" left="2" right="2" top="2" bottom="2" includeIn="over, down, downAndSelected, overAndSelected">
+		<s:fill>
+			<s:SolidColor color="#808080" alpha=".25"/>
+		</s:fill>
+	</s:Rect>
+	
+	<s:Image id="openImg" source="{Resources.OPEN}" includeIn="down, up, over" horizontalCenter="0" verticalCenter="0"/>
+	<s:Image id="closeImg" source="{Resources.CLOSE}" includeIn="downAndSelected, upAndSelected, overAndSelected"
+			 horizontalCenter="0" verticalCenter="0" itemCreationPolicy="immediate"/>
+    
+</s:SparkButtonSkin>
