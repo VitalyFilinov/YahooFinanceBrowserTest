@@ -69,7 +69,7 @@ package com.vit.yahoobrowser.models
 		private var currentCompany:ICompanyVO;
 		
 		/**
-		 * Retrieve the industries data, saves it and dispatches event;
+		 * Receives the industries data, saves it and dispatches event;
 		 * @param data:Object. Usually data from DataLoadStrategy.
 		 */
 		public function setIndustries(data:Object):void
@@ -79,7 +79,7 @@ package com.vit.yahoobrowser.models
 		}
 		
 		/**
-		 * Returns loaded industries list.
+		 * Returns industries list.
 		 * If currentSearchString is presented, returns search result.
 		 * If user started search procedure before data was loaded, search string will be saved and
 		 * search result will be returned next time industries data requested.
@@ -95,7 +95,7 @@ package com.vit.yahoobrowser.models
 		}
 		
 		/**
-		 * Retrieve the companies data according to current industry selected, saves data and dispatches event.
+		 * Receives the companies data according to current industry selected, saves data and dispatches event.
 		 * If data received with error, current industry will be unmarked as current to give user opportunities to
 		 * repeat action.
 		 * @param data:Object. Usually data from DataLoadStrategy.
@@ -180,6 +180,14 @@ package com.vit.yahoobrowser.models
 		}
 		
 		/**
+		 * Returns current selected company
+		 */
+		public function getCurrentCompany():ICompanyVO
+		{
+			return currentCompany;
+		}
+		
+		/**
 		 * Searches company by symbol through companies list.
 		 * If company was found, sets it as currentCompany.
 		 * Otherwise set currentCompanys isCurrent property to false.
@@ -211,15 +219,7 @@ package com.vit.yahoobrowser.models
 		}
 		
 		/**
-		 * Returns current selected company
-		 */
-		public function getCurrentCompany():ICompanyVO
-		{
-			return currentCompany;
-		}
-		
-		/**
-		 * Adds industry children list to industries list at position next to industry position
+		 * Adds industry children list to industries list at position next to industry position.
 		 * @param source - children list. IIndustryVO.children
 		 * @param index - current industry position in industries list 
 		 */
@@ -250,6 +250,7 @@ package com.vit.yahoobrowser.models
 		
 		/**
 		 * Searchs by string in industries names.
+		 * Uses only industries without children, because industries with children is a sectors;
 		 * If current search already presented, it will be cleared before.
 		 * If currentSearch is empty or industry not created yet, returns empty result;
 		 *  
