@@ -2,21 +2,39 @@ package com.vit.yahoobrowser.services.strategies.app
 {
 	import com.vit.yahoobrowser.models.YahooLoaderDataTypes;
 	import com.vit.yahoobrowser.models.vo.IndustryVO;
-	
 	import mx.collections.ArrayList;
 
+	/**
+	 * The member of the Strategy pattern to load industries from the YQL.
+	 */
 	public class YahooIndustriesLoadStrategy extends YahooDataLoadStrategy
 	{
+		/**
+		 * Returns current strategy query.
+		 */
 		override protected function get query():String
 		{
 			return "select  *  from  yahoo.finance.sectors";
 		}
 		
+		/**
+		 * Returns the id of the strategy.
+		 */
 		override public function get id():String
 		{
 			return YahooLoaderDataTypes.INDUSTRIES;
 		}
 		
+		/**
+		 * Returns the object of the parsed loaded data.
+		 * if qquery.results.sector not found query.results.sector is not an Array,
+		 * returns the object with empty array of industries.
+		 * 
+		 * Otherwise returns ArrayList of IndustryVO
+		 * created from received array of objects.
+		 * 
+		 * @param data:Object - object to be parsed.
+		 */
 		override public function parse(data:Object):Object
 		{
 			var json:Object = JSON.parse(data as String);

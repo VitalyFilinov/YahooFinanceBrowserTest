@@ -3,15 +3,31 @@ package com.vit.yahoobrowser.services.strategies.app
 	import com.vit.yahoobrowser.models.YahooLoaderDataTypes;
 	import com.vit.yahoobrowser.models.vo.ChartVO;
 	import com.vit.yahoobrowser.models.vo.QuoteVO;
-	
 	import mx.formatters.DateFormatter;
-
+	
+	/**
+	 * The member of the Strategy pattern to load quotes from the YQL
+	 * according to the company id.
+	 */
 	public class YahooQuotesLoadStrategy extends YahooDataLoadStrategy
 	{
+		/**
+		 * The company symbol name.
+		 */
 		private var companySymbol:String;
-		private var startDate:String;
-		private var endDate:String;
+		/**
+		 * The start date to be used to load quotes.
+		 */
+		private var startDate:Date;
+		/**
+		 * The end date to be used to load quotes.
+		 */
+		private var endDate:Date;
 		
+		/**
+		 * Formats dates to the string in YYYY-MM-DD format
+		 * and returns current strategy query.
+		 */
 		override protected function get query():String
 		{
 			var dateFormatter:DateFormatter = new DateFormatter();
@@ -23,11 +39,26 @@ package com.vit.yahoobrowser.services.strategies.app
 			return 'select * from yahoo.finance.historicaldata where symbol="' + companySymbol + '" and startDate="' + startDateString +'" and endDate="' + endDateString + '"';
 		}
 		
+		/**
+		 * Returns the id of the strategy.
+		 */
 		override public function get id():String
 		{
 			return YahooLoaderDataTypes.QUOTES;
 		}
 		
+		/**
+		 * Returns the object of the parsed loaded data.
+		 * if json.query.results.quote,
+		 * returns the ChartVO with empty array of quotes.
+		 * 
+		 * Otherwise returns Array of QuoteVO
+		 * created from received array of objects.
+		 * 
+		 * Saves minimum/maximum start/end data values during the main loop.
+		 * 
+		 * @param data:Object - object to be parsed.
+		 */
 		override public function parse(data:Object):Object
 		{
 			var json:Object = JSON.parse(data as String);
@@ -93,6 +124,10 @@ package com.vit.yahoobrowser.services.strategies.app
 			return new ChartVO(symbol, startDate, endDate, minClose, maxClose, quotes);
 		}
 		
+		/**
+		 * Sets additional loading parameters.
+		 * @param:params:Object
+		 */
 		override public function setParams(params:Object):void
 		{
 			companySymbol = params.symbol;
