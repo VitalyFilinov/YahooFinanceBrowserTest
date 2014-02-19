@@ -23,7 +23,7 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import com.vit.yahoobrowser.events.YahooDataEvent;
+			import com.vit.yahoobrowser.events.YahooIndustryEvent;
 			import com.vit.yahoobrowser.events.YahooFavoritesEvent;
 			import com.vit.yahoobrowser.models.vo.IIndustryVO;
 			import com.vit.yahoobrowser.resources.Resources;
@@ -51,7 +51,7 @@
 			{
 				if(isSector)
 				{
-					dispatchEvent(new YahooDataEvent(isOn? YahooDataEvent.SECTOR_CLOSE:YahooDataEvent.SECTOR_OPEN, true));
+					dispatchEvent(new YahooIndustryEvent(isOn? YahooIndustryEvent.SECTOR_CLOSE:YahooIndustryEvent.SECTOR_OPEN, true));
 				}
 				else
 				{

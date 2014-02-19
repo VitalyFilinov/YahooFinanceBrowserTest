@@ -1,7 +1,7 @@
 package com.vit.yahoobrowser.views
 {
 	import com.vit.yahoobrowser.events.DataLoaderEvent;
-	import com.vit.yahoobrowser.events.YahooDataEvent;
+	import com.vit.yahoobrowser.events.YahooIndustryEvent;
 	import com.vit.yahoobrowser.events.YahooDataSearchEvent;
 	import com.vit.yahoobrowser.events.YahooFavoritesEvent;
 	import com.vit.yahoobrowser.events.YahooIndustryEvent;
@@ -29,8 +29,8 @@ package com.vit.yahoobrowser.views
 			addViewListener(YahooFavoritesEvent.SAVE, onFavoritesSave, YahooFavoritesEvent);
 			addViewListener(YahooFavoritesEvent.RESET, onFavoritesReset, YahooFavoritesEvent);
 			
-			addViewListener(YahooDataEvent.SECTOR_OPEN, onSectorOpen, YahooDataEvent);
-			addViewListener(YahooDataEvent.SECTOR_CLOSE, onSectorClose, YahooDataEvent);
+			addViewListener(YahooIndustryEvent.SECTOR_OPEN, onSectorOpen, YahooIndustryEvent);
+			addViewListener(YahooIndustryEvent.SECTOR_CLOSE, onSectorClose, YahooIndustryEvent);
 			
 			addViewListener(YahooIndustryEvent.INDUSTRY_SELECTED, dispatch, YahooIndustryEvent);
 			
@@ -59,13 +59,13 @@ package com.vit.yahoobrowser.views
 			dataModel.setCurrentIndustry(event.vo);
 		}
 		
-		private function onSectorOpen(event:YahooDataEvent):void
+		private function onSectorOpen(event:YahooIndustryEvent):void
 		{
 			dataModel.openItem(view.getIndustriesDataProvider() as ArrayList, event.target.itemIndex);
 			event.stopImmediatePropagation();
 		}
 		
-		private function onSectorClose(event:YahooDataEvent):void
+		private function onSectorClose(event:YahooIndustryEvent):void
 		{
 			dataModel.closeItem(view.getIndustriesDataProvider() as ArrayList, event.target.itemIndex);
 			event.stopImmediatePropagation();
