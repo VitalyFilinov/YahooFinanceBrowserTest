@@ -1,5 +1,5 @@
 /**
-* YahooDataModel created and used is a part of project robotlegs structure as a Model
+* YahooDataModel created and used as a Model of the project robotlegs structure.
 * YahooDataModel stores industries and companies data loaded from YQL database.
 * There are four types of data stored:
 * - industries
