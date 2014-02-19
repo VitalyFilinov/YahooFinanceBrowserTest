@@ -1,3 +1,19 @@
+/**
+* YahooDataModel created and used is a part of project robotlegs structure as a Model
+* YahooDataModel stores industries and companies data loaded from YQL database.
+* There are four types of data stored:
+* - industries
+* - companies
+* - favorites
+* - search
+* All data stored as ArrayList to be compatible with DataGroup dataProvider (implemented IList)
+* The model also provide adding and removing components from/to industries list
+* to make industries list view openable (openItem, closeItem)
+* The model makes search by name field through industries using user defined string (getSearch)
+* The model creates temporary favorites list (tmpFavorites) until user confirm or cancel select
+* favorites process. When select favorites process finished, tmpFavorites are copied to main favorites
+* list or cleared depending on user choice.
+*/
 package com.vit.yahoobrowser.models
 {
 	import com.vit.yahoobrowser.events.YahooCompanyEvent;
