@@ -3,7 +3,7 @@ package com.vit.yahoobrowser
 	import com.vit.yahoobrowser.commands.YahooChartDataChangedCommand;
 	import com.vit.yahoobrowser.commands.YahooChartDataUpdateCommand;
 	import com.vit.yahoobrowser.commands.YahooCompanyChangeCommand;
-	import com.vit.yahoobrowser.commands.YahooFinanceBrowserInitCommand;
+	import com.vit.yahoobrowser.commands.YahooStartupCommand;
 	import com.vit.yahoobrowser.commands.YahooIndustrySelectedCommand;
 	import com.vit.yahoobrowser.commands.YahooLoadDataCommand;
 	import com.vit.yahoobrowser.commands.YahooLoadedDataCommand;
@@ -59,7 +59,7 @@ package com.vit.yahoobrowser
 		
 		public function configure():void
 		{
-			commandMap.map(Event.INIT).toCommand(YahooFinanceBrowserInitCommand);
+			commandMap.map(Event.INIT).toCommand(YahooStartupCommand);
 			
 			commandMap.map(YahooLoadDataEvent.LOAD_DATA, YahooLoadDataEvent).toCommand(YahooLoadDataCommand);
 			

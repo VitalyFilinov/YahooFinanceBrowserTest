@@ -1,16 +1,15 @@
 /**
-* YahooChartModel is created and used as a Model of the project robotlegs structure.
-* YahooChartModel stores quotes data loaded from YQL database.
+* IYahooChartModel is a Model iterface of the project robotlegs structure.
+* IYahooChartModel stores quotes data loaded from the data provider database.
 * Data stores as IChartVO to simplify data transfer to the system.
 *
-* The model also stores and returns start date and end date separately
+* The model also stores and returns the start date and the end date separately, 
 * to be able to change them before loading any data.
 */
 package com.vit.yahoobrowser.models
 {
 	import com.vit.yahoobrowser.events.YahooChartEvent;
 	import com.vit.yahoobrowser.models.vo.IChartVO;
-	import com.vit.yahoobrowser.models.vo.QuoteVO;
 	import flash.events.IEventDispatcher;
 
 	public class YahooChartModel implements IYahooChartModel
@@ -18,11 +17,11 @@ package com.vit.yahoobrowser.models
 		[Inject]
 		public var eventDispatcher:IEventDispatcher;
 		/**
-		 * Start date of quotes list time period
+		 * The start date of the quotes list time period
 		 */
 		private var startDate:Date;
 		/**
-		 * End date of quotes list time period
+		 * The end date of the quotes list time period
 		 */
 		private var endDate:Date;
 		/**
@@ -31,10 +30,10 @@ package com.vit.yahoobrowser.models
 		private var currentData:IChartVO;
 		
 		/**
-		* Sets start date to be used to load quotes.
-		* If now data was loaded (IChartVO was not created) saves value to variable.
+		* Sets the start date to be used to load quotes.
+		* If no data was loaded (IChartVO was not created) saves value to the variable.
 		* Otherwise saves value to IChartVO
-    * @param - value. Date to be saved as start date.
+		* @param value:Date - the date to be saved as the start date.
 		*/
 		public function setStartDate(value:Date):void
 		{
@@ -49,9 +48,9 @@ package com.vit.yahoobrowser.models
 		}
 		
 		/**
-		* Returns start date of stored data if it is presented.
-		* If data was not stored yet, returns startDate value.
-		* If startDate was not set, returns endDate value minus one month.
+		* Returns the start date of the stored data if it is presented.
+		* If the data was not stored yet, returns the startDate value.
+		* If the startDate was not set, returns the endDate value minus one month.
 		*/
 		public function getStartDate():Date
 		{
@@ -70,10 +69,10 @@ package com.vit.yahoobrowser.models
 		}
 		
 		/**
-		* Sets end date to be used to load quotes.
-		* If now data was loaded (IChartVO was not created) saves value to variable.
+		* Sets the end date to be used to load quotes.
+		* If no data was loaded (IChartVO was not created) saves value to the variable.
 		* Otherwise saves value to IChartVO.
-		* @param - value. Date to be saved as end date.
+		* @param value:Date - the date to be saved as the end date.
 		*/
 		public function setEndDate(value:Date):void
 		{
@@ -88,9 +87,9 @@ package com.vit.yahoobrowser.models
 		}
 		
 		/**
-		* Returns end date of stored data if it is presented.
-		* If data was not stored yet, returns startDate value.
-		* If startDate was not set, returns new Date (now).
+		* Returns the end date of the stored data if it is presented.
+		* If the data was not stored yet, returns the startDate value.
+		* If the startDate was not set, returns new Date (now).
 		*/
 		public function getEndDate():Date
 		{
@@ -107,9 +106,9 @@ package com.vit.yahoobrowser.models
 			return endDate;
 		}
 		
-		/*
-		* Sets chart data and dispatches event.
-		* @param loadedData - object. Usually data from DataLoadStrategy.
+		/**
+		* Sets the chart data and dispatches event.
+		* @param loadedData:Object - the chart data. Usually the data from DataLoadStrategy.
 		*/
 		public function setChartData(loadedData:Object):void
 		{

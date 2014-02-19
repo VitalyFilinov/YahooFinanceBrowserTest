@@ -1,9 +1,9 @@
 /**
 * IYahooChartModel is a Model iterface of the project robotlegs structure.
-* IYahooChartModel stores quotes data loaded from YQL database.
+* IYahooChartModel stores quotes data loaded from the data provider database.
 * Data stores as IChartVO to simplify data transfer to the system.
 *
-* The model also stores and returns start date and end date separately
+* The model also stores and returns the start date and the end date separately, 
 * to be able to change them before loading any data.
 */
 package com.vit.yahoobrowser.models
@@ -13,27 +13,30 @@ package com.vit.yahoobrowser.models
 	public interface IYahooChartModel
 	{
 		/**
-		* Sets start date to be used to load quotes.
+		* Sets the start date to be used to load quotes.
+		* @param value:Date - the date to be saved as the start date.
 		*/
 		function setStartDate(value:Date):void;
 		/**
-		* Returns start date.
+		* Returns the start date.
 		*/
 		function getStartDate():Date;
 		/**
-		* Sets start end to be used to load quotes.
+		* Sets the end date to be used to load quotes.
+		* @param value:Date - the date to be saved as the end date.
 		*/
 		function setEndDate(value:Date):void;
 		/**
-		* Returns end date.
+		* Returns the end date.
 		*/
 		function getEndDate():Date;
 		/**
-		* Sets chart data.
+		* Sets the chart data.
+		* @param loadedData:Object - the chart data.
 		*/
 		function setChartData(loadedData:Object):void;
 		/**
-		* Returns chart data.
+		* Returns the chart data.
 		*/
 		function getChartData():IChartVO;
 	}

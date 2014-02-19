@@ -1,6 +1,6 @@
 /**
 * YahooDataModel is created and used as a Model of the project robotlegs structure.
-* YahooDataModel stores industries and companies data loaded from YQL database.
+* YahooDataModel stores industries and companies data loaded from the data provider database.
 * There are four types of data stored:
 * - industries
 * - companies
@@ -32,27 +32,27 @@ package com.vit.yahoobrowser.models
 		public var eventDispatcher:IEventDispatcher;
 		
 		/**
-		 * List of all industries loaded
+		 * The list of all industries loaded.
 		 */
 		private var industries:ArrayList;
 		/**
-		 * List of companies represnting current industry
+		 * The list of the companies according to current industry.
 		 */
 		private var companies:ArrayList;
 		/**
-		 * List of favorite companies
+		 * The list of the favorite companies.
 		 */
 		private var favorites:ArrayList = new ArrayList();
 		/**
-		 * Temporary list of favorite companies to make cancel action possible
+		 * The temporary list of the favorite companies to make cancel action possible.
 		 */
 		private var tmpFavorites:ArrayList;
 		/**
-		 * List of current founded companies
+		 * The list of current founded companies.
 		 */
 		private var currentSearch:ArrayList;
 		/**
-		 * Current search string
+		 * Current search string.
 		 */
 		private var currentSearchString:String;
 		/**
@@ -70,7 +70,7 @@ package com.vit.yahoobrowser.models
 		
 		/**
 		 * Receives the industries data, saves it and dispatches event;
-		 * @param data:Object. Usually data from DataLoadStrategy.
+		 * @param data:Object - the data to be saved as industries data. Usually data from DataLoadStrategy.
 		 */
 		public function setIndustries(data:Object):void
 		{
@@ -98,7 +98,7 @@ package com.vit.yahoobrowser.models
 		 * Receives the companies data according to current industry selected, saves data and dispatches event.
 		 * If data received with error, current industry will be unmarked as current to give user opportunities to
 		 * repeat action.
-		 * @param data:Object. Usually data from DataLoadStrategy.
+		 * @param data:Object - the data to be saved as companies data. Usually data from DataLoadStrategy.
 		 */
 		public function setCompanies(data:Object):void
 		{
@@ -125,9 +125,9 @@ package com.vit.yahoobrowser.models
 		/**
 		 * Sets current industry.
 		 * If currentIndustry is the same, does nothing.
-		 * Otherwise sets isCurrent property of current industry to false, sets isCurrent property of new industry to true
-		 * and clears companies list.
-		 * @param industry - IIndustryVO.
+		 * Otherwise sets isCurrent property of current industry to false, sets isCurrent property of the new industry to true
+		 * and clears the companies list.
+		 * @param industry:IIndustryVO - the value object to be saved as current industry.
 		 */
 		public function setCurrentIndustry(industry:IIndustryVO):void
 		{
@@ -157,7 +157,7 @@ package com.vit.yahoobrowser.models
 		 * If currentCompany is the same, does nothing.
 		 * Otherwise sets isCurrent property of current company to false, sets isCurrent property of new company to true
 		 * and dispatches event.
-		 * @param company - ICompanyVO.
+		 * @param company:ICompanyVO - the value object to be saved as current company.
 		 */
 		public function setCurrentCompany(company:ICompanyVO):void
 		{
@@ -180,7 +180,7 @@ package com.vit.yahoobrowser.models
 		}
 		
 		/**
-		 * Returns current selected company
+		 * Returns current selected company value object.
 		 */
 		public function getCurrentCompany():ICompanyVO
 		{
@@ -189,9 +189,9 @@ package com.vit.yahoobrowser.models
 		
 		/**
 		 * Searches company by symbol through companies list.
-		 * If company was found, sets it as currentCompany.
-		 * Otherwise set currentCompanys isCurrent property to false.
-		 * @param _symbol - company symbol. ICompanyVO.symbol.
+		 * If the company was found, sets it as currentCompany.
+		 * Otherwise set the currentCompany's isCurrent property to false.
+		 * @param _symbol:String - the company symbol name.
 		 */
 		public function setCurrentCompanyBySymbol(_symbol:String):void
 		{
@@ -219,9 +219,9 @@ package com.vit.yahoobrowser.models
 		}
 		
 		/**
-		 * Adds industry children list to industries list at position next to industry position.
-		 * @param source - children list. IIndustryVO.children
-		 * @param index - current industry position in industries list 
+		 * Adds the industry children list to the industries list at the position next to the industry position.
+		 * @param source:ArrayList - the children list.
+		 * @param index:int - current industry position in the industries list.
 		 */
 		public function openItem(source:ArrayList, index:int):void
 		{
@@ -231,9 +231,9 @@ package com.vit.yahoobrowser.models
 		}
 		
 		/**
-		 * Removes industry children from industries list from the position next to industry position.
-		 * @param source - children list. IIndustryVO.children
-		 * @param index - current industry position in industries list 
+		 * Removes the industry children from the industries list from the position next to the industry position.
+		 * @param source - the children list.
+		 * @param index - current industry position in the industries list.
 		 */
 		public function closeItem(source:ArrayList, index:int):void
 		{
@@ -249,16 +249,17 @@ package com.vit.yahoobrowser.models
 		}
 		
 		/**
-		 * Searchs by string in industries names.
-		 * Uses only industries without children, because industries with children is a sectors;
-		 * If current search already presented, it will be cleared before.
+		 * Searchs by the string in the industries names.
+		 * Uses only industries without children, because industries with the children
+		 * is a sectors in our case.
+		 * If currentSearch is already presented, it will be cleared before.
 		 * If currentSearch is empty or industry not created yet, returns empty result;
 		 *  
-		 * Loops through children of industries.
-		 * If industry found, clone of parent industry will be created.
-		 * Property isOpened in founded items will be differ from default IIndustryVO.
-		 * Sets all items isOpened = true, to open all sectors in founded list
-		 * @param searchString
+		 * Loops through the children of industries.
+		 * If industry found, the clone of parent industry will be created.
+		 * The property isOpened of founded items will be differ from default IIndustryVO.
+		 * Sets all items isOpened property to true, to open all sectors in founded list.
+		 * @param searchString:String - the string used to process search.
 		 */
 		public function getSearch(searchString:String):ArrayList
 		{
@@ -316,7 +317,7 @@ package com.vit.yahoobrowser.models
 		}
 		
 		/**
-		 * Clears search list and searchString
+		 * Clears the search list and the searchString
 		 */
 		public function clearSearch():void
 		{
@@ -326,11 +327,11 @@ package com.vit.yahoobrowser.models
 		}
 		
 		/**
-		 * Creates temporary favorites list (if not created yet) and
-		 * adds favorite item to temporary favorites list.
-		 * If user will cancel all items in temporary list will be cleared
+		 * Creates the temporary favorites list (if not created yet) and
+		 * adds the favorite item to the temporary favorites list.
+		 * If the user will cancel, all items in the temporary list will be cleared.
 		 * Otherwise was copied to main favorites list.
-		 * @param item IIndustryVO
+		 * @param item:IIndustryVO - the value object to be stored in favorites list.
 		 */
 		public function addFavorite(item:IIndustryVO):void
 		{
@@ -342,11 +343,11 @@ package com.vit.yahoobrowser.models
 		}
 		
 		/**
-		 * Removes item from temporary favorites list.
-		 * If complete == true, removes item from main favorites list.
-		 * (User can remove item from favorites from main favorites list - not simply uncheck)
-		 * @param item IIndustryVO
-		 * @param complete - completely removes item from favorites
+		 * Removes the item from the temporary favorites list.
+		 * If complete parameter is true, removes item from main favorites list.
+		 * (The user can remove the item from the main favorites list - not simply uncheck)
+		 * @param item:IIndustryVO - item to be removed from favorites list.
+		 * @param completeBoolean - if true, completely remove the item from the favorites.
 		 */
 		public function removeFavorite(item:IIndustryVO, complete:Boolean = false):void
 		{
@@ -365,14 +366,14 @@ package com.vit.yahoobrowser.models
 		}
 		
 		/**
-		 * Saves temporary favorites list to main favorites list and clear temporary favorites list.
-		 * All items in old favorites list sets isFavorite = false first.
-		 * All items in temporary favorites list sets isFavorite = true.
-		 * Sorts sourse of new favorites ArrayList by name
+		 * Saves the temporary favorites list to the main favorites list and clear the temporary favorites list.
+		 * Sets isFavorite parameter to false in all items in old favorites list first.
+		 * Sets isFavorite parameter to true in all items in the temporary favorites list.
+		 * Sorts the sourse of new favorites ArrayList by name.
 		 */
 		public function saveFavorites():void
 		{
-			if(tmpFavorites == null) return; // favorites was not been changed
+			if(tmpFavorites == null) return; // the favorites was not been changed
 			
 			favorites ||= new ArrayList();
 			
@@ -402,9 +403,9 @@ package com.vit.yahoobrowser.models
 		}
 		
 		/**
-		 * Removes temporary favorites list.
-		 * All items in temporary favorites list sets isFavorite = false first.
-		 * All items in favorites list sets isFavorite = true.
+		 * Removes the temporary favorites list.
+		 * Sets isFavorite parameter to false in all items in temporary favorites list first.
+		 * Sets isFavorite parameter to true in all items in the favorites list.
 		 */
 		public function resetFavorites():void
 		{
@@ -433,7 +434,7 @@ package com.vit.yahoobrowser.models
 		}
 		
 		/**
-		 * Returns favorites list
+		 * Returns the favorites list.
 		 */
 		public function getFavorites():ArrayList
 		{

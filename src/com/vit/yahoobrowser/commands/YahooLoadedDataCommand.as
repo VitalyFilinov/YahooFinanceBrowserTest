@@ -1,3 +1,15 @@
+/**
+ * YahooLoadedDataCommand is created and used as a Command of the project robotlegs structure.
+ * YahooLoadedDataCommand is listen for the YahooDataLoaderEvent.EVENT_DATA_LOADED or
+ * YahooDataLoaderEvent.EVENT_DATA_FAILED event.
+ * Above mentioning events dispatches when downloading process is finished.
+ * 
+ * If YahooDataLoaderEvent.EVENT_DATA_LOADED is received the command
+ * sets the data according to event.dataType.
+ * 
+ * If YahooDataLoaderEvent.EVENT_DATA_FAILED is received the command
+ * dispatches appropriate error event.
+ */
 package com.vit.yahoobrowser.commands
 {
 	import com.vit.yahoobrowser.events.DataLoaderEvent;
@@ -7,9 +19,7 @@ package com.vit.yahoobrowser.commands
 	import com.vit.yahoobrowser.models.IYahooChartModel;
 	import com.vit.yahoobrowser.models.IYahooDataModel;
 	import com.vit.yahoobrowser.models.YahooLoaderDataTypes;
-	
 	import flash.events.IEventDispatcher;
-	
 	import robotlegs.bender.bundles.mvcs.Command;
 	
 	public class YahooLoadedDataCommand extends Command
@@ -30,40 +40,46 @@ package com.vit.yahoobrowser.commands
 		{
 			if(event.type == DataLoaderEvent.EVENT_DATA_LOADED)
 			{
-				if(event.loaderID == YahooLoaderDataTypes.INDUSTRIES)
+				/**
+				 * Industries list are loaded.
+				 * Sets industries data to the IYahooDataModel.
+				 */
+				if(event.dataType == YahooLoaderDataTypes.INDUSTRIES)
 				{
 					dataModel.setIndustries(event.loadedData);
 				}
-				else if(event.loaderID == YahooLoaderDataTypes.COMPANIES)
+				/**
+				 * Companies list are loaded.
+				 * Sets companies data to the IYahooDataModel.
+				 */
+				else if(event.dataType == YahooLoaderDataTypes.COMPANIES)
 				{
 					dataModel.setCompanies(event.loadedData);
 				}
-				else if(event.loaderID == YahooLoaderDataTypes.QUOTES)
+				/**
+				 * Quotes are loaded.
+				 * Sets Quotes data to the IYahooChartModel.
+				 */
+				else if(event.dataType == YahooLoaderDataTypes.QUOTES)
 				{
 					chartModel.setChartData(event.loadedData);
 				}
 			}
 			else if(event.type == DataLoaderEvent.EVENT_DATA_FAILED)
 			{
-				if(event.loaderID == YahooLoaderDataTypes.INDUSTRIES)
+				if(event.dataType == YahooLoaderDataTypes.INDUSTRIES)
 				{
 					eventDispatcher.dispatchEvent(new YahooIndustryEvent(YahooIndustryEvent.CURRENT_INDUSTRY_ERROR));
 				}
-				else if(event.loaderID == YahooLoaderDataTypes.COMPANIES)
+				else if(event.dataType == YahooLoaderDataTypes.COMPANIES)
 				{
 					eventDispatcher.dispatchEvent(new YahooCompanyEvent(YahooCompanyEvent.COMPANIES_ERROR));
 				}
-				else if(event.loaderID == YahooLoaderDataTypes.QUOTES)
+				else if(event.dataType == YahooLoaderDataTypes.QUOTES)
 				{
 					eventDispatcher.dispatchEvent(new YahooChartEvent(YahooChartEvent.CHART_DATA_ERROR));
 				}	
 			}
-		}
-		
-		private function setCurrentChartData(loadedData:Object):void
-		{
-			// TODO Auto Generated method stub
-			
 		}
 	}
 }

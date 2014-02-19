@@ -1,7 +1,7 @@
 /**
- * YahooChartDataChangedCommand listen for YahooChartEvent.CHART_DATA_CHANGED.
- * YahooChartEvent.CHART_DATA_CHANGED dispatches when data changed in model.
- * Command tries to set current company by using received event.symbol.
+ * YahooChartDataChangedCommand listen for the YahooChartEvent.CHART_DATA_CHANGED event.
+ * YahooChartEvent.CHART_DATA_CHANGED event dispatches when the chart data is changed.
+ * The command tries to set current company by using received event.symbol.
  */
 package com.vit.yahoobrowser.commands
 {

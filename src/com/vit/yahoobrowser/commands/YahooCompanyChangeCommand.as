@@ -1,3 +1,11 @@
+/**
+ * YahooChartDataChangedCommand is created and used as a Command of the project robotlegs structure.
+ * YahooChartDataChangedCommand is listen for the YahooCompanyEvent.COMPANY_CHANGED event.
+ * YahooCompanyEvent.COMPANY_CHANGED event dispatches when current company is changed.
+ * The command dispatches the YahooLoadDataEvent.LOAD_DATA event to load
+ * current selected company quotes data from the data provider using symbol name from IYahooDataModel,
+ * but startData and endData from IYahooChartModel.
+ */
 package com.vit.yahoobrowser.commands
 {
 	import com.vit.yahoobrowser.events.YahooCompanyEvent;

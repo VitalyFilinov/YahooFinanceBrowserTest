@@ -5,22 +5,22 @@ package com.vit.yahoobrowser.events
 	
 	public class DataLoaderProgressEvent extends ProgressEvent
 	{
-		private var _loaderID:String;
+		private var _dataType:String;
 		
-		public function DataLoaderProgressEvent(type:String, loaderID:String, bubbles:Boolean=false, cancelable:Boolean=false, bytesLoaded:Number=0, bytesTotal:Number=0)
+		public function DataLoaderProgressEvent(type:String, dataType:String, bubbles:Boolean=false, cancelable:Boolean=false, bytesLoaded:Number=0, bytesTotal:Number=0)
 		{
 			super(type, bubbles, cancelable, bytesLoaded, bytesTotal);
-			_loaderID = loaderID;
+			_dataType = dataType;
 		}
 		
-		public function get loaderID():String
+		public function get dataType():String
 		{
-			return _loaderID;
+			return _dataType;
 		}
 		
 		override public function clone():Event
 		{
-			return new DataLoaderProgressEvent(type, loaderID, bubbles, cancelable, bytesLoaded, bytesTotal);
+			return new DataLoaderProgressEvent(type, dataType, bubbles, cancelable, bytesLoaded, bytesTotal);
 		}
 	}
 }

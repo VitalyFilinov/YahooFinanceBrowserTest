@@ -8,14 +8,14 @@ package com.vit.yahoobrowser.events
 		public static const EVENT_DATA_FAILED:String = "event_data_failed";
 		
 		private var _loadedData:Object;
-		private var _loaderID:String;
+		private var _dataType:String;
 		private var _errorMessage:String;
 		
-		public function DataLoaderEvent(type:String, loadedData:Object, loaderID:String, errorMessage:String = "", bubbles:Boolean=false, cancelable:Boolean=false)
+		public function DataLoaderEvent(type:String, loadedData:Object, dataType:String, errorMessage:String = "", bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
 			_loadedData = loadedData;
-			_loaderID = loaderID;
+			_dataType = dataType;
 			_errorMessage = errorMessage;
 		}
 		
@@ -24,9 +24,9 @@ package com.vit.yahoobrowser.events
 			return _loadedData;
 		}
 		
-		public function get loaderID():String
+		public function get dataType():String
 		{
-			return _loaderID;
+			return _dataType;
 		}
 		
 		public function get errorMessage():String
@@ -36,7 +36,7 @@ package com.vit.yahoobrowser.events
 		
 		override public function clone():Event
 		{
-			return new DataLoaderEvent(type, loadedData, loaderID, errorMessage, bubbles, cancelable);
+			return new DataLoaderEvent(type, loadedData, dataType, errorMessage, bubbles, cancelable);
 		}
 	}
 }

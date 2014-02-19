@@ -47,7 +47,7 @@ package com.vit.yahoobrowser.views
 		
 		private function onDataLoaded(event:DataLoaderEvent):void
 		{
-			if(event.loaderID == YahooLoaderDataTypes.INDUSTRIES)
+			if(event.dataType == YahooLoaderDataTypes.INDUSTRIES)
 			{
 				view.setDataLoaded();
 				removeContextListener(DataLoaderEvent.EVENT_DATA_LOADED, onDataLoaded, DataLoaderEvent);

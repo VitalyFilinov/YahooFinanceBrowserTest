@@ -1,3 +1,10 @@
+/**
+ * YahooIndustrySelectedCommand is created and used as a Command of the project robotlegs structure.
+ * YahooIndustrySelectedCommand is listen for YahooIndustryEvent.INDUSTRY_SELECTED event.
+ * YahooIndustryEvent.INDUSTRY_SELECTED event dispatches when current industry is selected.
+ * The command dispatches the YahooLoadDataEvent.LOAD_DATA event to load
+ * the companies list from the data provider according to current selected industry using event.id.
+ */
 package com.vit.yahoobrowser.commands
 {
 	import com.vit.yahoobrowser.events.YahooIndustryEvent;

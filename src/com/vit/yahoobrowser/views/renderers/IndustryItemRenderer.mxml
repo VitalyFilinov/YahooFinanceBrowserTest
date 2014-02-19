@@ -51,7 +51,7 @@
 			{
 				if(isSector)
 				{
-					dispatchEvent(new YahooIndustryEvent(isOn? YahooIndustryEvent.SECTOR_CLOSE:YahooIndustryEvent.SECTOR_OPEN, true));
+					dispatchEvent(new YahooIndustryEvent(isOn? YahooIndustryEvent.SECTOR_CLOSE:YahooIndustryEvent.SECTOR_OPEN, null, true));
 				}
 				else
 				{

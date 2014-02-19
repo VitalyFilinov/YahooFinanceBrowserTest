@@ -1,9 +1,10 @@
  /**
- * YahooChartDataUpdateCommand listen for YahooChartEvent.CHART_DATA_UPDATE.
- * YahooChartEvent.CHART_DATA_UPDATE dispatches when symbol, startDate or endDate changed.
- * Command updates startDate and endDate on iYahooChartModel,
+ * YahooChartDataUpdateCommand listen for the YahooChartEvent.CHART_DATA_UPDATE event.
+ * YahooChartEvent.CHART_DATA_UPDATE event dispatches when symbol, startDate or endDate changed.
+ * The command updates startDate and endDate on iYahooChartModel,
  * tries to set current company by event.symbol and
- * dispatches YahooLoadDataEvent.LOAD_DATA to load quotes data.
+ * dispatches the YahooLoadDataEvent.LOAD_DATA event to load 
+ * current selected company quotes data using event.symbol as as a simbol name.
  */
 package com.vit.yahoobrowser.commands
 {

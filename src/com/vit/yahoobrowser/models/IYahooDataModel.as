@@ -1,6 +1,6 @@
 /**
 * IYahooDataModel is a Model interface of the project robotlegs structure.
-* IYahooDataModel stores industries and companies data loaded from YQL database.
+* IYahooDataModel stores the industries and the companies data loaded from the data provider database.
 */
 package com.vit.yahoobrowser.models
 {
@@ -12,20 +12,20 @@ package com.vit.yahoobrowser.models
 	{
 			/**
 		 * Receives the industries.
-		 * @param data - data to be saved.
+		 * @param data:Object - the data to be saved.
 		 */
 		function setIndustries(data:Object):void;
 		/**
-		 * Returns industries.
+		 * Returns the industries.
 		 */
 		function getIndustries():ArrayList;
 		/**
 		 * Receives the companies.
-     * @param data - data to be saved.
+		 * @param data:Object - data to be saved.
 		 */
 		function setCompanies(data:Object):void;
 		/**
-		 * Returns companies.
+		 * Returns the companies.
 		 */
 		function getCompanies():ArrayList;
 		/**
@@ -34,59 +34,60 @@ package com.vit.yahoobrowser.models
 		function setCurrentIndustry(industry:IIndustryVO):void;
 		/**
 		 * Sets current company.
-		 * @param data - company to be selected as current.
+		 * @param data:ICompanyVO - the company to be selected as current.
 		 */
 		function setCurrentCompany(company:ICompanyVO):void;
 		/**
 		 * Returns current selected company.
 		 */
 		function getCurrentCompany():ICompanyVO;
-			/**
-		 * Searches company by symbol through companies list and sets it as currentCompany if found.
-		 * @param symbol - string to be used to search a company by symbol name.
+		/**
+		 * Searches a company by the symbol through the companies list and sets it as currentCompany if found.
+		 * @param symbol:String - the string to be used to search a company by the symbol name.
 		 */
 		function setCurrentCompanyBySymbol(symbol:String):void;
 		/**
-		 * Adds industry children list to industries list at position next to industry position.
-		 * @param source - list to be added to industries.
-		 * @param source - item index in industries list.
+		 * Adds industry children list to the industries list at the position next to the industry position.
+		 * @param source:ArrayList - the list to be added to the industries list.
+		 * @param index:int - the item index in the industries list.
 		 */
 		function openItem(source:ArrayList, index:int):void;
 		/**
-		 * Removes industry children from industries list from the position next to industry position.
-		 * @param source - list to be removed from industries.
-		 * @param source - item index in industries list.
+		 * Removes industry children from industries list from the position next to the industry position.
+		 * @param source:ArrayList - the list to be removed from the industries list.
+		 * @param index:int - the item index in the industries list.
 		 */
 		function closeItem(source:ArrayList, index:int):void;
 		/**
 		 * Searchs by string in industries names.
-		 * @param symbol - string to be used to search a industry by name.
+		 * @param symbol:String - the string to be used to search a industry by the name.
 		 */
 		function getSearch(searchString:String):ArrayList;
 		/**
-		 * Clears search list and searchString.
+		 * Clears the search list and the searchString.
 		 */
 		function clearSearch():void;
 		/**
 		* Adds industry to favorites.
-		* @param item - industry to be added to favorites.
+		* @param item:IIndustryVO - industry to be added to the favorites list.
 		*/
 		function addFavorite(item:IIndustryVO):void;
 		/**
 		* Removes industry from favorites.
-		* @param item - industry to be removed from favorites
+		* @param item:IIndustryVO - industry to be removed from the favorites list.
+		* @param complete:Boolean - removes from previosly saved favorites list.
 		*/
 		function removeFavorite(item:IIndustryVO, complete:Boolean = false):void;
 		/**
-		* Saves favorites changes
+		* Saves the favorite's changes
 		*/
 		function saveFavorites():void;
 		/**
-		* Resets favorites to previously saved state.
+		* Resets the favorites to previously saved state.
 		*/
 		function resetFavorites():void;
 		/**
-		* Returns favorites
+		* Returns the favorites
 		*/
 		function getFavorites():ArrayList;
 	}
