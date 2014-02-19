@@ -1,5 +1,5 @@
 /**
-* IYahooDataModel is a Model of the project robotlegs structure.
+* IYahooDataModel is a Model interface of the project robotlegs structure.
 * IYahooDataModel stores industries and companies data loaded from YQL database.
 */
 package com.vit.yahoobrowser.models
