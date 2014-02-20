@@ -12,13 +12,36 @@
 	
 	<fx:Script>
 		<![CDATA[
+			/**
+			 * CompaniesListView is created and used as a View of the project robotlegs structure.
+			 * CompaniesListView shows the companies list.
+			 * There are two states used in:
+			 * - loading
+			 * - data
+			 * - hidden
+			 * 
+			 * The 'hidden' state is the first run state to hide everything.
+			 * The 'loading' state shows the busy indicator only.
+			 * The 'data' state shows the companies list.
+			 * 
+			 * If companies list was set with error, sets the error label visibility to true.
+			 * Otherwise the error label is not visible.
+			 */
 			import mx.collections.ArrayList;
 			import mx.collections.IList;
 			
+			/**
+			 * The data provider for the companies list.
+			 */
 			[Bindable]
 			private var companiesDataProvider:IList = new ArrayList();
 			
-			public function setDataProvider(provider:ArrayList, withError:Boolean = false):void
+			/**
+			 * Sets current data provider for the industries list.
+			 * @param	provider:IList - the data provider to be used as current data provider for the companies list.
+			 * @param	withError:Boolean - shows whether the companies are laoded with error or not.
+			 */
+			public function setDataProvider(provider:IList, withError:Boolean = false):void
 			{
 				companiesDataProvider = provider;
 				setCurrentState("data");
@@ -27,6 +50,9 @@
 				noDataLabel.visible = withError;
 			}
 			
+			/**
+			 * Shows busy indicator and hides error label.
+			 */
 			public function setLoading():void
 			{
 				setCurrentState("loading");

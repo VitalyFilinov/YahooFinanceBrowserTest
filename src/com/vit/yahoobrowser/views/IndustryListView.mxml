@@ -43,9 +43,9 @@
 			private var favoritesDataProvider:IList = new ArrayList();
 			
 			/**
-			 * Sets current data provider for the industries list
-			 * @param	provider:IList - the data provider to be used as current data provider for the industries list
-			 * @param	invokeBrowser:Boolean - shows whether the industry state has been set.
+			 * Sets current data provider for the industries list.
+			 * @param	provider:IList - the data provider to be used as current data provider for the industries list.
+			 * @param	invokeBrowser:Boolean - shows whether the industry state must be set or not.
 			 */
 			public function setIndustriesDataProvider(provider:IList, invokeBrowser:Boolean = false):void
 			{

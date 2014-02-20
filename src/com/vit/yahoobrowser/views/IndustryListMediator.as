@@ -1,5 +1,6 @@
 /**
- * IndustryListMediator is created and used as a Mediator of the project robotlegs structure.
+ * IndustryListMediator is created and used as a Mediator of the project robotlegs structure
+ * to connect IndustryListView to the project. 
  */
 package com.vit.yahoobrowser.views
 {
