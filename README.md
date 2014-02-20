@@ -1,28 +1,25 @@
-<<<<<<< HEAD
-Yahoo Finance Data Browser Test Project
->>>>>>>
-fc820baf890b53f9ea9a66c61bf2215fbfe43268
-
-The project created by usign robotlegs 2.0 architecture.
+The project is created by usign robotlegs 2.0 architecture.
 
 The data is stored in two models:
-	YahooDataModel - stores the industries data;
-	YahooChartModel - stores the chart data.
+	IYahooDataModel - stores the industries data;
+	IYahooChartModel - stores the chart data.
 	
-There are four types of data stored in YahooDataModel:
+There are four types of data stored in IYahooDataModel:
 - industries
 - companies
 - favorites
 - search
+
 All data stored as ArrayList to be compatible with DataGroup dataProvider (implemented IList)
-The YahooDataModel also provide adding and removing components from/to industries list
-to make industries list view openable (openItem, closeItem)described
+The IYahooDataModel also provide adding and removing components from/to industries list
+to make industries list view openable (openItem, closeItem).
+
 The YahooDataModel makes search by name field through industries using user defined string (getSearch)
 The YahooDataModel creates temporary favorites list (tmpFavorites) until user confirm or cancel select
 favorites process. When select favorites process finished, tmpFavorites are copied to main favorites
 list or cleared depending on user choice.
 
-YahooChartModel stores quotes data loaded from the data provider database.
+IYahooChartModel stores quotes data loaded from the data provider database.
 Data stores as IChartVO to simplify data transfer to the system.
 The model also stores and returns the start date and the end date separately, 
 to be able to change them before loading any data.
