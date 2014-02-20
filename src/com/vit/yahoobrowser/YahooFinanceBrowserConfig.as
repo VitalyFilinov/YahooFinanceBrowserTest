@@ -59,26 +59,29 @@ package com.vit.yahoobrowser
 		
 		public function configure():void
 		{
+			/**
+			 * COMMANDS
+			 */
 			commandMap.map(Event.INIT).toCommand(YahooStartupCommand);
-			
 			commandMap.map(YahooLoadDataEvent.LOAD_DATA, YahooLoadDataEvent).toCommand(YahooLoadDataCommand);
-			
 			commandMap.map(DataLoaderEvent.EVENT_DATA_LOADED, DataLoaderEvent).toCommand(YahooLoadedDataCommand);
 			commandMap.map(DataLoaderEvent.EVENT_DATA_FAILED, DataLoaderEvent).toCommand(YahooLoadedDataCommand);
-			
 			commandMap.map(YahooIndustryEvent.INDUSTRY_SELECTED, YahooIndustryEvent).toCommand(YahooIndustrySelectedCommand);
-			
 			commandMap.map(YahooCompanyEvent.COMPANY_CHANGED, YahooCompanyEvent).toCommand(YahooCompanyChangeCommand);
-			
 			commandMap.map(YahooDataSearchEvent.SEARCH, YahooDataSearchEvent).toCommand(YahooSearchCommand);
-			
 			commandMap.map(YahooChartEvent.CHART_DATA_UPDATE, YahooChartEvent).toCommand(YahooChartDataUpdateCommand);
 			commandMap.map(YahooChartEvent.CHART_DATA_CHANGED, YahooChartEvent).toCommand(YahooChartDataChangedCommand);
 			
+			/**
+			 * MODELS
+			 */
 			injector.map(IYahooDataSertvice).toSingleton(YahooDataService);
 			injector.map(IYahooDataModel).toSingleton(YahooDataModel);
 			injector.map(IYahooChartModel).toSingleton(YahooChartModel);
 			
+			/**
+			 * MEDIATORS
+			 */
 			mediatorMap.map(IndustryManagerView).toMediator(IndustryManagerMediator);
 			mediatorMap.map(IndustryListView).toMediator(IndustryListMediator);
 			mediatorMap.map(CompaniesListView).toMediator(CompaniesListMediator);

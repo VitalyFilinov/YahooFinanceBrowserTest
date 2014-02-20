@@ -60,6 +60,7 @@
 				<s:HorizontalLayout gap="20"/>
 			</s:layout>
 			
+			<!-- Symbol input -->
 			<s:Group>
 				<s:layout>
 					<s:HorizontalLayout gap="3" verticalAlign="middle"/>
@@ -68,6 +69,7 @@
 				<views:SearchTextInput id="symbol" left="2" right="30" top="2" width="100" height="26" change="changedHandler()"/>
 			</s:Group>
 			
+			<!-- Start data input -->
 			<s:Group>
 				<s:layout>
 					<s:HorizontalLayout gap="3" verticalAlign="middle"/>
@@ -76,6 +78,7 @@
 				<mx:DateField id="startDate" width="120" height="26" change="changedHandler()"/>
 			</s:Group>
 			
+			<!-- End data input -->
 			<s:Group>
 				<s:layout>
 					<s:HorizontalLayout gap="3" verticalAlign="middle"/>

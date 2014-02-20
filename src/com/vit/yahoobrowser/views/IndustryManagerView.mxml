@@ -44,7 +44,9 @@
 	</s:layout>
 	
 	<s:BorderContainer id="searchBlock" width="100%" borderColor="0x000000" height="32">
+		<!-- Search input field -->
 		<views:SearchTextInput id="search" left="2" right="30" text="Search" top="2" height="26" change="changeHandler(event)"/>
+		<!-- Button to open/close industry list -->
 		<views:IndustryManagerOpenButton id="btn" right="2" top="2" click="onListButtonClick(event)" width="26" height="26"/>
 	</s:BorderContainer>
 	

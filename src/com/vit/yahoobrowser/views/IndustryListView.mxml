@@ -139,6 +139,7 @@
 		]]>
 	</fx:Script>
 	
+	<!-- Favorites data group with scroller -->
 	<s:Scroller horizontalScrollPolicy="off" top="4" right="4" bottom="4" left="4" includeIn="favorites">
 		<s:DataGroup id="favoritesList" width="100%" height="100%"
 					 		dataProvider="{favoritesDataProvider}"
@@ -149,24 +150,27 @@
 		</s:DataGroup>
 	</s:Scroller>
 		
-		<s:Scroller horizontalScrollPolicy="off" top="4" right="4" bottom="38" left="4" includeIn="industries">
-			<s:DataGroup id="industriesList" width="100%" height="100%"
-								dataProvider="{industriesDataProvider}"
-								itemRenderer="com.vit.yahoobrowser.views.renderers.IndustryItemRenderer">
-				<s:layout>
-					<s:VerticalLayout gap="1" useVirtualLayout="true"/>
-				</s:layout>
-			</s:DataGroup>
-		</s:Scroller>
-		
-		<s:Group left="-1" right="-2" bottom="-1" includeIn="industries">
+	<!-- Industries data group with scroller -->
+	<s:Scroller horizontalScrollPolicy="off" top="4" right="4" bottom="38" left="4" includeIn="industries">
+		<s:DataGroup id="industriesList" width="100%" height="100%"
+							dataProvider="{industriesDataProvider}"
+							itemRenderer="com.vit.yahoobrowser.views.renderers.IndustryItemRenderer">
 			<s:layout>
-				<s:HorizontalLayout id="btnLayout" gap="-1"/>
+				<s:VerticalLayout gap="1" useVirtualLayout="true"/>
 			</s:layout>
-			<views:IndustryManagerListButton id="saveBtn" label="Save" width="50%" height="34" click="saveClickHandler(event)"/>
-			<views:IndustryManagerListButton id="cancelBtn" label="Cancel" width="50%" height="34" click="cancelClickHandler(event)"/>
-		</s:Group>
+		</s:DataGroup>
+	</s:Scroller>
 	
-		<views:BusyIndicator id="busyIndicator" horizontalCenter="0" verticalCenter="0" visible.favorites="false" visible.industries="true"/>
+	<!-- Save and Cancel buttons -->
+	<s:Group left="-1" right="-2" bottom="-1" includeIn="industries">
+		<s:layout>
+			<s:HorizontalLayout id="btnLayout" gap="-1"/>
+		</s:layout>
+		<views:IndustryManagerListButton id="saveBtn" label="Save" width="50%" height="34" click="saveClickHandler(event)"/>
+		<views:IndustryManagerListButton id="cancelBtn" label="Cancel" width="50%" height="34" click="cancelClickHandler(event)"/>
+	</s:Group>
+
+	<!-- Busy indicator -->
+	<views:BusyIndicator id="busyIndicator" horizontalCenter="0" verticalCenter="0" visible.favorites="false" visible.industries="true"/>
 	
 </s:BorderContainer>

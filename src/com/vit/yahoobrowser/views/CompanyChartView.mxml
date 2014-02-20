@@ -167,10 +167,12 @@
 		</mx:series>
 	</mx:AreaChart>
 	
+	<!-- Black border around area chart -->
 	<s:BorderContainer x="{gridLines.x}" y="{gridLines.y}" width="{gridLines.width}" height="{gridLines.height}"
 					   borderColor="#000000" backgroundAlpha="0"/>
-	
+	<!-- Busy indicator -->
 	<views:BusyIndicator id="busyIndicator" horizontalCenter="0" verticalCenter="0" includeIn="loading"/>
+	<!-- Error label -->
 	<s:Label id="noDataLabel" text="No data returned by provider." horizontalCenter="0" verticalCenter="0"
 			 visible="false" mouseEnabled="false" mouseChildren="false"/>
 
