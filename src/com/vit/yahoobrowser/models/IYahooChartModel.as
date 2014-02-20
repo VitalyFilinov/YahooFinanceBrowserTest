@@ -1,10 +1,6 @@
 /**
 * IYahooChartModel is a Model iterface of the project robotlegs structure.
 * IYahooChartModel stores quotes data loaded from the data provider database.
-* Data stores as IChartVO to simplify data transfer to the system.
-*
-* The model also stores and returns the start date and the end date separately, 
-* to be able to change them before loading any data.
 */
 package com.vit.yahoobrowser.models
 {
