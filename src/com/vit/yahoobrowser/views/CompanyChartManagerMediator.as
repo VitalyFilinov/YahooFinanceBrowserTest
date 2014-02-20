@@ -1,3 +1,7 @@
+/**
+ * CompanyChartManagerMediator is created and used as a Mediator of the project robotlegs structure
+ * to connect CompanyChartManagerView to the project. 
+ */
 package com.vit.yahoobrowser.views
 {
 	import com.vit.yahoobrowser.events.YahooChartEvent;
@@ -16,13 +20,23 @@ package com.vit.yahoobrowser.views
 		
 		override public function initialize():void
 		{
-			addContextListener(YahooCompanyEvent.COMPANY_CHANGED, onCompanySelected, YahooCompanyEvent);
-			
 			addViewListener(YahooChartEvent.CHART_DATA_UPDATE, dispatch, YahooChartEvent);
 			
+			addContextListener(YahooCompanyEvent.COMPANY_CHANGED, onCompanySelected, YahooCompanyEvent);
+			
+			/**
+			 * Sets view default dates
+			 */
 			view.setDates(chartModel.getStartDate(), chartModel.getEndDate());
 		}
 		
+		/**
+		 * Handles YahooCompanyEvent.COMPANY_CHANGED event dispatched by the context
+		 * when the company is changed.
+		 * 
+		 * Sets the new symbol name by calling view.setSymbol method using the
+		 * symbol name from value object provided by the event.
+		 */
 		private function onCompanySelected(event:YahooCompanyEvent):void
 		{
 			view.setSymbol(event.vo.symbol);

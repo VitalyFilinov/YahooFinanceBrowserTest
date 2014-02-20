@@ -6,12 +6,21 @@
 		 width="100%" height="100%">
 	<fx:Script>
 		<![CDATA[
+			/**
+			 * CompanyChartManagerView is created and used as a View of the project robotlegs structure.
+			 * CompanyChartManagerView shows the chart symbol and dates inputs.
+			 */
 			import com.vit.yahoobrowser.events.YahooChartEvent;
-			
 			import mx.events.CalendarLayoutChangeEvent;
-			
 			import spark.events.TextOperationEvent;
 			
+			/**
+			 * Handles the events from the inputs and dispatches YahooChartEvent.CHART_DATA_UPDATE event
+			 * in case the symbol text name is not empty (length > 2).
+			 * 
+			 * Otherwise the new data loading rejected and YahooChartEvent.CHART_DATA_UPDATE event
+			 * must not be dispatched.
+			 */
 			protected function changedHandler():void
 			{
 				if(symbol.text.length > 2 || symbol.text.length == 0)
@@ -20,12 +29,20 @@
 				}
 			}
 			
+			/**
+			 * Sets the start date and end date for the chart
+			 * @param _startDate:Date - the date to be used as current start date.
+			 * @param _endDate:Date - the date to be used as current end date.
+			 */
 			public function setDates(_startDate:Date, _endDate:Date):void
 			{
 				startDate.selectedDate = _startDate;
 				endDate.selectedDate = _endDate;
 			}
 			
+			/**
+			 * Sets the symbol name.
+			 */
 			public function setSymbol(_symbol:String):void
 			{
 				symbol.text = _symbol;

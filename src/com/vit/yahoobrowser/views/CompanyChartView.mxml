@@ -103,7 +103,7 @@
 			}
 			
 			/**
-			 * Sets symbol name.
+			 * Sets the symbol name.
 			 */
 			public function setSymbol(_symbol:String):void
 			{
