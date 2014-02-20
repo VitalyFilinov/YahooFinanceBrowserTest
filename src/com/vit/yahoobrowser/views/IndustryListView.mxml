@@ -11,18 +11,42 @@
 	
 	<fx:Script>
 		<![CDATA[
+			/**
+			 * IndustryListView is created and used as a View of the project robotlegs structure.
+			 * IndustryListView shows the industries list.
+			 * There are two states used in:
+			 * - industries
+			 * - favorites.
+			 * The industries state shows the list of all industires or
+			 * the list of found industries if the search is processed.
+			 * The industries list uses IndustryItemRenderer to render items.
+			 * The save button and cancel button shows in the industries state only.
+			 * 
+			 * The favorites state shows the list of favorite industries.
+			 * The favorites list uses FavoriteItemRenderer to render items.
+			 */
 			import com.vit.yahoobrowser.events.YahooFavoritesEvent;
 			import com.vit.yahoobrowser.views.renderers.IndustryItemRenderer;
-			
 			import mx.collections.ArrayList;
 			import mx.collections.IList;
 			
+			/**
+			 * The data provider for the industries list.
+			 */
 			[Bindable]
 			private var industriesDataProvider:IList = new ArrayList();
 			
+			/**
+			 * The data provider for the favorites list.
+			 */
 			[Bindable]
 			private var favoritesDataProvider:IList = new ArrayList();
 			
+			/**
+			 * Sets current data provider for the industries list
+			 * @param	provider:IList - the data provider to be used as current data provider for the industries list
+			 * @param	invokeBrowser:Boolean - shows whether the industry state has been set.
+			 */
 			public function setIndustriesDataProvider(provider:IList, invokeBrowser:Boolean = false):void
 			{
 				industriesDataProvider = provider;
@@ -33,38 +57,60 @@
 				}
 			}
 			
+			/**
+			 * Returns current data provider for the industries list.
+			 */
 			public function getIndustriesDataProvider():IList
 			{
 				return industriesDataProvider;
 			}
 			
+			/**
+			 * Sets current data provider for the favories list.
+			 * @param	provider:IList - the data provider to be used as current data provider for the favorites list
+			 */
 			public function setFavoritesDataProvider(provider:IList):void
 			{
 				favoritesDataProvider = provider;
 			}
 			
+			/**
+			 * Sets 'industries' state.
+			 */
 			private function setIndustriesState():void
 			{
 				setCurrentState("industries");
 			}
 			
+			/**
+			 * Sets 'favorites' state.
+			 */
 			private function setFavoritesState():void
 			{
 				setCurrentState("favorites");
 			}
 			
+			/**
+			 * Handles save button click and dispatches event.
+			 */
 			protected function saveClickHandler(event:MouseEvent):void
 			{
 				dispatchEvent(new YahooFavoritesEvent(YahooFavoritesEvent.SAVE));
 				setFavoritesState();
 			}
 			
+			/**
+			 * Handles cancel button click and dispatches event.
+			 */
 			protected function cancelClickHandler(event:MouseEvent):void
 			{
 				dispatchEvent(new YahooFavoritesEvent(YahooFavoritesEvent.RESET));
 				setFavoritesState();
 			}
 			
+			/**
+			 * Switches states.
+			 */
 			public function invokeIndustriesState():void
 			{
 				if(currentState == "industries")
@@ -77,6 +123,11 @@
 				}
 			}
 			
+			/**
+			 * Removes the busy indicator.
+			 * In our case the industries data is loaded only once.
+			 * When the industries data is loaded the busy indicator has to be removed at all.
+			 */
 			public function setDataLoaded():void
 			{
 				if(busyIndicator && busyIndicator.parent)
