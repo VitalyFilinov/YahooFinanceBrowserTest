@@ -6,7 +6,7 @@
              alpha.disabled="0.5">
      
     <fx:Metadata>
-        <![CDATA[ 
+        <![CDATA[
         	[HostComponent("com.vit.yahoobrowser.views.IndustryManagerListButton")]
         ]]>
     </fx:Metadata>
@@ -18,6 +18,7 @@
         <s:State name="disabled" />
     </s:states>
     
+	<!-- Button black border -->
     <s:Rect id="border" left="0" right="0" top="0" bottom="0">
         <s:stroke>
            <s:SolidColorStroke color="#000000"/>
@@ -27,18 +28,21 @@
 		</s:fill>
     </s:Rect>
 	
+	<!-- Button gray fill -->
 	<s:Rect id="fill" left="2" right="2" top="2" bottom="2" includeIn="up">
 		<s:fill>
 			<s:SolidColor color="#808080" alpha=".5"/>
 		</s:fill>
 	</s:Rect>
 	
+	<!-- Button light gray fill for mouseOver, mouseDown states -->
 	<s:Rect id="fillOver" left="2" right="2" top="2" bottom="2" includeIn="over, down">
 		<s:fill>
 			<s:SolidColor color="#808080" alpha=".25"/>
 		</s:fill>
 	</s:Rect>
     
+	<!-- Button label -->
     <s:Label id="labelDisplay"
              textAlign="center"
              maxDisplayedLines="1"

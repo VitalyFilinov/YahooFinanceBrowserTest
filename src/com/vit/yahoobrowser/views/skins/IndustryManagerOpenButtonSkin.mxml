@@ -27,6 +27,7 @@
 		<s:State name="upAndSelected" />
     </s:states>
     
+	<!-- Button black border -->
     <s:Rect id="border" left="0" right="0" top="0" bottom="0">
         <s:stroke>
            <s:SolidColorStroke color="#000000"/>
@@ -36,18 +37,21 @@
 		</s:fill>
     </s:Rect>
 	
+	<!-- Button gray fill -->
 	<s:Rect id="fill" left="2" right="2" top="2" bottom="2" includeIn="up, upAndSelected">
 		<s:fill>
 			<s:SolidColor color="#808080" alpha=".5"/>
 		</s:fill>
 	</s:Rect>
 	
+	<!-- Button light gray fill for mouseOver, mouseDown states -->
 	<s:Rect id="fillOver" left="2" right="2" top="2" bottom="2" includeIn="over, down, downAndSelected, overAndSelected">
 		<s:fill>
 			<s:SolidColor color="#808080" alpha=".25"/>
 		</s:fill>
 	</s:Rect>
 	
+	<!-- Button icons -->
 	<s:Image id="openImg" source="{Resources.OPEN}" includeIn="down, up, over" horizontalCenter="0" verticalCenter="0"/>
 	<s:Image id="closeImg" source="{Resources.CLOSE}" includeIn="downAndSelected, upAndSelected, overAndSelected"
 			 horizontalCenter="0" verticalCenter="0" itemCreationPolicy="immediate"/>

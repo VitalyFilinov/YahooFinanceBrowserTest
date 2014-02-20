@@ -6,16 +6,27 @@
 	
 	<fx:Script>
 		<![CDATA[
+			/**
+			 * IndustryChartManagerView is created and used as a View of the project robotlegs structure.
+			 * IndustryChartManagerView shows the search input field and button to open/close industry list.
+			 */
 			import com.vit.yahoobrowser.events.YahooDataSearchEvent;
 			import com.vit.yahoobrowser.events.YahooViewEvent;
-			
 			import spark.events.TextOperationEvent;
 			
+			/**
+			 * Handles the button click and dispatches the YahooViewEvent.INVOKE_INDUSTRY_BROWSER
+			 * to open/close industry list.
+			 */
 			private function onListButtonClick(event:MouseEvent):void
 			{
 				dispatchEvent(new YahooViewEvent(YahooViewEvent.INVOKE_INDUSTRY_BROWSER));
 			}
 			
+			/**
+			 * Handles the change event from the serach input and dispatches YahooDataSearchEvent.SEARCH event
+			 * in case the search text is not empty (length > 2).
+			 */
 			protected function changeHandler(event:TextOperationEvent):void
 			{
 				if(search.value.length > 2 || search.value.length == 0)

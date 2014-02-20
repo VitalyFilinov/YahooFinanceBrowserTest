@@ -1,3 +1,7 @@
+/**
+ * IndustryManagerMediator is created and used as a Mediator of the project robotlegs structure
+ * to connect IndustryManagerView to the project. 
+ */
 package com.vit.yahoobrowser.views
 {
 	import com.vit.yahoobrowser.events.YahooDataSearchEvent;
@@ -17,12 +21,7 @@ package com.vit.yahoobrowser.views
 		override public function initialize():void
 		{
 			addViewListener(YahooDataSearchEvent.SEARCH, dispatch, YahooDataSearchEvent);
-			addViewListener(YahooViewEvent.INVOKE_INDUSTRY_BROWSER, dispatchIvoke, YahooViewEvent);
-		}
-		
-		private function dispatchIvoke(event:YahooViewEvent):void
-		{
-			dispatch(new YahooViewEvent(YahooViewEvent.INVOKE_INDUSTRY_BROWSER));
+			addViewListener(YahooViewEvent.INVOKE_INDUSTRY_BROWSER, dispatch, YahooViewEvent);
 		}
 	}
 }
