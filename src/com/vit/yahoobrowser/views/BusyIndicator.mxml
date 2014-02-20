@@ -5,7 +5,10 @@
 		 xmlns:views="com.vit.yahoobrowser.views.*">
 	<fx:Script>
 		<![CDATA[
-			
+			/**
+			* The BusyIndicator class used to show the user some activity when the loading is processing.
+			* In current case the swf file found in the internet is used as a preview.
+			*/
 			[Embed (source="../../../../../libs/loader.swf" )]
 			[Bindable]
 			public var LOADER:Class;
@@ -13,6 +16,11 @@
 			private var loaderMC:MovieClip;
 			private var isPlaying:Boolean = false;
 			
+			/**
+			* Plays swf if it is already loaded.
+			* Otherwise sets the isPlaying prameter to true.
+			* When swf will be loaded it will be starts automatically if isPlaying is true.
+			*/
 			public function play():void
 			{
 				isPlaying = true;
@@ -20,9 +28,13 @@
 				{
 					loaderMC.play();
 				}
-				
 			}
 			
+			/**
+			* Stops swf if it is already loaded.
+			* Otherwise sets the isPlaying prameter to false.
+			* When swf will be loaded it will NOT be starts automatically if isPlaying is false.
+			*/
 			public function stop():void
 			{
 				isPlaying = false;
@@ -32,6 +44,10 @@
 				}
 			}
 			
+			/**
+			* To access swf as MovieClip we need to load it first.
+			* When swf is loaded it plays or stops accroding to isPlaying parameter value.
+			*/
 			private function initLoader():void{
 				loaderMC = loader.content as MovieClip;
 				if(isPlaying)
