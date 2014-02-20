@@ -8,7 +8,7 @@
 	<fx:Script>
 		<![CDATA[
 		/**
-		 * Text input can automaitcally set the default text when the text is empty.
+		 * Text input can automaitcally set the default text when the text is empty. 
 		 */
 			import mx.events.FlexEvent;
 			
