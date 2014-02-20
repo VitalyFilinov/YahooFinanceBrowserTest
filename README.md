@@ -1,4 +1,5 @@
-The project is created by usign robotlegs 2.0 architecture.
+The project is created by usign Flash Builder 4.6
+The project uses robotlegs 2.0 architecture.
 
 The data is stored in two models:
 	IYahooDataModel - stores the industries data;
