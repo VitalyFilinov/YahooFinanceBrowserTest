@@ -18,16 +18,38 @@
 	
 	<fx:Script>
 		<![CDATA[
+			/**
+			 * FavoriteItemRenederer is created to show favorite industry item in favorites list.
+			 * FavoriteItemRenederer uses four states:
+			 * - normalOut
+			 * - normalOver
+			 * - selectedOut
+			 * - selectedOver
+			 * The states automatically changes on RollOver/RollOut events
+			 * and according to the value object isSelected value.
+			 */
 			import com.vit.yahoobrowser.events.YahooFavoritesEvent;
 			import com.vit.yahoobrowser.events.YahooIndustryEvent;
 			import com.vit.yahoobrowser.models.vo.IIndustryVO;
 			import com.vit.yahoobrowser.resources.Resources;
 			
+			/**
+			 * the value object of the previewed industry.
+			 */
 			private var vo:IIndustryVO;
-			
+			/**
+			 * Shows whether the industry is selected or not.
+			 */
 			private var isSelected:Boolean = false;
+			/**
+			 * Shows whether the mouse is owver the item or not.
+			 */
 			private var isMouseOver:Boolean = false;
 			
+			/**
+			 * Sets the current data.
+			 * Sets the value object and set the super data value to industry name. 
+			 */
 			override public function set data(value:Object):void
 			{
 				if(!value) return; // TODO Why null?
@@ -36,28 +58,49 @@
 				super.data = vo.name;
 			}
 			
+			/**
+			 * Handles the user clicked delete button and
+			 * dispatches YahooFavoritesEvent.COMPLETE_REMOVE
+			 * event with using value object and bubbles.
+			 */
 			protected function clickHandler(event:MouseEvent):void
 			{
 				dispatchEvent(new YahooFavoritesEvent(YahooFavoritesEvent.COMPLETE_REMOVE, vo, true));
 			}
 			
+			/**
+			 * Handles the user clicked item and
+			 * dispatches YahooIndustryEvent.INDUSTRY_SELECTED
+			 * event with using value object and bubbles.
+			 */
 			protected function onIndustryClick(event:MouseEvent):void
 			{
 				dispatchEvent(new YahooIndustryEvent(YahooIndustryEvent.INDUSTRY_SELECTED, vo, true));
 			}
 			
+			/**
+			 * Handles rollOver.
+			 * Sets isMouseOver to true and update state.
+			 */
 			protected function rollOverHandler(event:MouseEvent):void
 			{
 				isMouseOver = true;
 				updateState();
 			}
 			
+			/**
+			 * Handles rollOut.
+			 * Sets isMouseOver to false and update state.
+			 */
 			protected function rollOutHandler(event:MouseEvent):void
 			{
 				isMouseOver = false;
 				updateState();
 			}
 			
+			/**
+			 * Updates state.
+			 */
 			private function updateState(event:Event = null):void
 			{
 				isSelected = vo.isCurrent;
@@ -72,12 +115,14 @@
 		]]>
 	</fx:Script>
 	
+	<!-- item selected background -->
 	<s:Rect top="-1" bottom="-1" left="0" right="0" includeIn="selected">
 		<s:fill>
 			<s:SolidColor color="#BFBFBF"/>
 		</s:fill>
 	</s:Rect>
 	
+	<!-- item over background -->
 	<s:Group width="100%" height="100%" click="onIndustryClick(event)">
 		<s:Rect top="-1" bottom="-1" left="0" right="0" includeIn="over">
 			<s:fill>
@@ -86,12 +131,13 @@
 		</s:Rect>
 	</s:Group>
 
-	
+	<!-- item label -->
 	<s:Label id="itemLabel" text="{data}" fontSize="12"
 			 color.out="#000000"
 			 color.over="#FFFFFF"
 			 top="4" width="100%" paddingLeft="4" paddingRight = "15" mouseChildren="false" mouseEnabled="false"/>
 	
+	<!-- item icon shows only on over states -->
 	<s:Image id="deleteImg" source="{Resources.DELETE}" includeIn="normalOver, selectedOver" bottom="2" right="4" click="clickHandler(event)"/>
 	
 </s:ItemRenderer>

@@ -195,7 +195,7 @@ package com.vit.yahoobrowser.models
 		 */
 		public function setCurrentCompanyBySymbol(_symbol:String):void
 		{
-			if(!companies || !currentCompany || currentCompany.symbol == _symbol)
+			if(!companies || (currentCompany && currentCompany.symbol == _symbol))
 			{
 				return;
 			}
@@ -206,15 +206,18 @@ package com.vit.yahoobrowser.models
 			{
 				company = companies.getItemAt(a) as ICompanyVO;
 				
-				if(company.symbol == _symbol)
+				if(company.symbol.toLowerCase() == _symbol.toLowerCase())
 				{
 					setCurrentCompany(company);
 					return;
 				}
 			}
 			
-			currentCompany.isCurrent = false;
-			companies.itemUpdated(currentCompany);
+			if(currentCompany)
+			{
+				currentCompany.isCurrent = false;
+				companies.itemUpdated(currentCompany);
+			}
 			currentCompany = null;
 		}
 		

@@ -21,7 +21,20 @@ package com.vit.yahoobrowser.views
 		override public function initialize():void
 		{
 			addViewListener(YahooDataSearchEvent.SEARCH, dispatch, YahooDataSearchEvent);
-			addViewListener(YahooViewEvent.INVOKE_INDUSTRY_BROWSER, dispatch, YahooViewEvent);
+			
+			//addViewListener(YahooViewEvent.INVOKE_INDUSTRY_BROWSER, dispatch, YahooViewEvent);
+			//TODO Why direct dispatch is not working???
+			
+			addViewListener(YahooViewEvent.INVOKE_INDUSTRY_BROWSER, dispatchIvoke, YahooViewEvent);
+		}
+		
+		/**
+		 * Dispatches YahooViewEvent.INVOKE_INDUSTRY_BROWSER
+		 * TODO Why direct dispatch is not working???
+		 */
+		private function dispatchIvoke(event:YahooViewEvent):void
+		{
+			dispatch(new YahooViewEvent(YahooViewEvent.INVOKE_INDUSTRY_BROWSER));
 		}
 	}
 }

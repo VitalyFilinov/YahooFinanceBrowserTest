@@ -23,17 +23,62 @@
 	
 	<fx:Script>
 		<![CDATA[
+			/**
+			 * FavoriteItemRenederer is created to show favorite industry item in favorites list.
+			 * FavoriteItemRenederer uses the following states:
+			 * ------- for sector -------
+			 * - sectorOverOn
+			 * - sectorOverOff
+			 * - sectorOutOn
+			 * - sectorOutOff
+			 * ------- for industry -------
+			 * - industryOverOn
+			 * - industryOverOff
+			 * - industryOutOn
+			 * - industryOutOff
+			 * The states automatically changes on RollOver/RollOut events.
+			 * 
+			 * In our case if the industry has children it shows and can be opened
+			 * as a sector. If value object children length is not empty the isSector
+			 * parameter is set to true.
+			 * 
+			 * If value object is a sector and isOpened value is true
+			 * or value object is not a sector and isFavorite value is true
+			 * isOn value equals true. Otherwise isOn is false;
+			 * 
+			 * Using isMouseOver, isSector and isOn parameters
+			 * we can build the state name:
+			 * var newState:String = 
+			 * isSector? "sector":"industry") +
+			 * (isMouseOver? "Over":"Out") +
+			 * (isOn? "On":"Off");
+			 */
 			import com.vit.yahoobrowser.events.YahooIndustryEvent;
 			import com.vit.yahoobrowser.events.YahooFavoritesEvent;
 			import com.vit.yahoobrowser.models.vo.IIndustryVO;
 			import com.vit.yahoobrowser.resources.Resources;
 			
+			/**
+			 * Shows whether the item is a sector and is opened or item is industry and is a favorite or not.
+			 */
 			private var isOn:Boolean = false;
+			/**
+			 * Shows whether the mouse is owver the item or not.
+			 */
 			private var isMouseOver:Boolean = false;
+			/**
+			 * Shows item is a sector (children length > 0) or not.
+			 */
 			private var isSector:Boolean = false;
-			
+			/**
+			 * The value object of the previewed industry.
+			 */
 			private var vo:IIndustryVO;
 			
+			/**
+			 * Sets the current data.
+			 * Sets the value object and set the super data value to industry name. 
+			 */
 			override public function set data(value:Object):void
 			{
 				if(value == null)
@@ -47,6 +92,11 @@
 				updateState();
 			}
 			
+			/**
+			 * Handles the user clicked icon and
+			 * dispatches the appropriate event using bubbles.
+			 * Updates state.
+			 */
 			protected function clickHandler(event:MouseEvent):void
 			{
 				if(isSector)
@@ -61,18 +111,29 @@
 				updateState();
 			}
 			
+			/**
+			 * Handles rollOver.
+			 * Sets isMouseOver to true and update state.
+			 */
 			protected function rollOverHandler(event:MouseEvent):void
 			{
 				isMouseOver = true;
 				updateState();
 			}
 			
+			/**
+			 * Handles rollOut.
+			 * Sets isMouseOver to false and update state.
+			 */
 			protected function rollOutHandler(event:MouseEvent):void
 			{
 				isMouseOver = false;
 				updateState();
 			}
 			
+			/**
+			 * Updates state.
+			 */
 			private function updateState(event:Event = null):void
 			{
 				isSector = vo.children && vo.children.length > 0;
@@ -89,6 +150,7 @@
 		]]>
 	</fx:Script>
 	
+	<!-- item over background -->
 	<s:Rect right="0" top="-1" bottom="-1"
 			left.sectorOverOff="0" left.sectorOverOn="0"
 			left.industryOverOff="13" left.industryOverOn="13"
@@ -98,14 +160,17 @@
 		</s:fill>
 	</s:Rect>
 	
+	<!-- item label -->
 	<s:Label id="itemLabel" text="{data}" fontSize="12" top="4" width="100%"
 			 paddingLeft="15" paddingRight = "24"/>
 	
+	<!-- item icons for sector -->
 	<s:Image id="plusImg" source="{Resources.PLUS}" top="3"
 			 includeIn="sectorOverOff, sectorOutOff" click="clickHandler(event)"/>
 	<s:Image id="minusImg" source="{Resources.MINUS}" top="3"
 			 includeIn="sectorOverOn, sectorOutOn" click="clickHandler(event)"/>
 	
+	<!-- item icons for industry -->
 	<s:Image id="yesImg" source="{Resources.CHECKBOX_YES}" top="1" right="4"
 			 includeIn="industryOverOn, industryOutOn" click="clickHandler(event)"/>
 	<s:Image id="noImg" source="{Resources.CHECKBOX_NO}" top="1" right="4"

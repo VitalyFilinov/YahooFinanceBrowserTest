@@ -40,8 +40,8 @@ package com.vit.yahoobrowser.views
 			addContextListener(YahooFavoritesEvent.CHANGED, setFavorites, YahooFavoritesEvent);
 			
 			addContextListener(YahooDataSearchEvent.SEARCH, setSearch, YahooDataSearchEvent);
-			
 			addContextListener(YahooViewEvent.INVOKE_INDUSTRY_BROWSER, onIndustryBrowserInvoke, YahooViewEvent);
+			
 			addContextListener(DataLoaderEvent.EVENT_DATA_LOADED, onDataLoaded, DataLoaderEvent);
 			
 			addViewListener(YahooIndustryEvent.INDUSTRY_SELECTED, dispatch, YahooIndustryEvent);

@@ -32,6 +32,7 @@
 				if(search.value.length > 2 || search.value.length == 0)
 				{
 					dispatchEvent(new YahooDataSearchEvent(YahooDataSearchEvent.SEARCH, search.value));
+					btn.selected = true;
 				}
 			}
 			
