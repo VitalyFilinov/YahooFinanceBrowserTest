@@ -7,7 +7,7 @@
 		<![CDATA[
 			/**
 			* The BusyIndicator class used to show the user some activity when the loading is processing.
-			* In current case the swf file found in the internet is used as a preview.
+			* In current case the swf file found in the internet is used as a preview.  --
 			*/
 			[Embed (source="../../../../../libs/loader.swf" )]
 			[Bindable]
