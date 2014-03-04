@@ -20,9 +20,6 @@
 		</robotlegs:ContextBuilderTag>
 	</fx:Declarations>
 	
-	
-	
-	
 	<views:IndustryManagerView id="industryManager" top="{DEFAULT_SPACE}" left="{DEFAULT_SPACE}"/>
 	<s:Group id="leftSection" top="{industryManager.y + industryManager.height + DEFAULT_SPACE}" bottom="{DEFAULT_SPACE}" left="{DEFAULT_SPACE}" width="200">
 		<s:layout>
