@@ -21,7 +21,7 @@ package com.vit.yahoobrowser.services.app
 	import flash.events.SecurityErrorEvent;
 	import com.vit.yahoobrowser.events.DataLoaderProgressEvent;
 	
-	public class YahooDataService implements IYahooDataSertvice
+	public class YahooDataService implements IYahooDataService
 	{
 		[Inject]
 		public var eventDispatcher:IEventDispatcher;
@@ -101,6 +101,8 @@ package com.vit.yahoobrowser.services.app
 			
 			eventDispatcher.dispatchEvent(new DataLoaderEvent(DataLoaderEvent.EVENT_DATA_LOADED, loader.strategy.parse(loader.data), loader.strategy.id));
 			
+			trace("VF", "YahooDataService::completeHandler", loader.data);
+			
 			removeLoader(loader);
 		}
 		
@@ -111,11 +113,11 @@ package com.vit.yahoobrowser.services.app
 		private function progressHandler(event:ProgressEvent):void
 		{
 			var loader:DataLoader = event.target as DataLoader;
-			eventDispatcher.dispatchEvent(
-				new DataLoaderProgressEvent(
-					DataLoaderEvent.EVENT_DATA_LOADED, loader.strategy.id, false, false, event.bytesLoaded, event.bytesTotal
-				)
-			);
+//			eventDispatcher.dispatchEvent(
+//				new DataLoaderProgressEvent(
+//					DataLoaderEvent.EVENT_DATA_LOADED, loader.strategy.id, false, false, event.bytesLoaded, event.bytesTotal
+//				)
+//			);
 		}
 		
 		/**
@@ -134,6 +136,7 @@ package com.vit.yahoobrowser.services.app
 		 */
 		private function securityErrorHandler(event:SecurityErrorEvent):void
 		{
+			trace("VF", "YahooDataService::securityErrorHandler");
 			var loader:DataLoader  = event.target as DataLoader;
 			eventDispatcher.dispatchEvent(new DataLoaderEvent(DataLoaderEvent.EVENT_DATA_FAILED, null, loader.strategy.id, event.text));
 			removeLoader(loader);
@@ -146,6 +149,7 @@ package com.vit.yahoobrowser.services.app
 		 */
 		private function ioErrorHandler(event:IOErrorEvent):void
 		{
+			trace("VF", "YahooDataService::ioErrorHandler");
 			var loader:DataLoader  = event.target as DataLoader;
 			eventDispatcher.dispatchEvent(new DataLoaderEvent(DataLoaderEvent.EVENT_DATA_FAILED, null, loader.strategy.id, event.text));
 			removeLoader(loader);

@@ -66,18 +66,18 @@ package com.vit.yahoobrowser.models
 		/**
 		 * Clears the search list and the searchString.
 		 */
-		function clearSearch():void;
+		function clearSearch():ArrayList;
 		/**
 		* Adds industry to favorites.
 		* @param item:IIndustryVO - industry to be added to the favorites list.
 		*/
-		function addFavorite(item:IIndustryVO):void;
+		function addFavorite(item:IIndustryVO):Boolean;
 		/**
 		* Removes industry from favorites.
 		* @param item:IIndustryVO - industry to be removed from the favorites list.
 		* @param complete:Boolean - removes from previosly saved favorites list.
 		*/
-		function removeFavorite(item:IIndustryVO, complete:Boolean = false):void;
+		function removeFavorite(item:IIndustryVO, complete:Boolean = false):Boolean;
 		/**
 		* Saves the favorite's changes
 		*/

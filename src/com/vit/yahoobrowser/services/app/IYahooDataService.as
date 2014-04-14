@@ -5,7 +5,7 @@ package com.vit.yahoobrowser.services.app
 {
 	import com.vit.yahoobrowser.services.strategies.base.IDataLoaderStrategy;
 
-	public interface IYahooDataSertvice
+	public interface IYahooDataService
 	{
 		/**
 		 * Loads the data using the strategy parameters.

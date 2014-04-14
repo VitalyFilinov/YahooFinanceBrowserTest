@@ -18,7 +18,7 @@ package com.vit.yahoobrowser
 	import com.vit.yahoobrowser.models.IYahooDataModel;
 	import com.vit.yahoobrowser.models.YahooChartModel;
 	import com.vit.yahoobrowser.models.YahooDataModel;
-	import com.vit.yahoobrowser.services.app.IYahooDataSertvice;
+	import com.vit.yahoobrowser.services.app.IYahooDataService;
 	import com.vit.yahoobrowser.services.app.YahooDataService;
 	import com.vit.yahoobrowser.views.CompaniesListMediator;
 	import com.vit.yahoobrowser.views.CompaniesListView;
@@ -75,7 +75,7 @@ package com.vit.yahoobrowser
 			/**
 			 * MODELS
 			 */
-			injector.map(IYahooDataSertvice).toSingleton(YahooDataService);
+			injector.map(IYahooDataService).toSingleton(YahooDataService);
 			injector.map(IYahooDataModel).toSingleton(YahooDataModel);
 			injector.map(IYahooChartModel).toSingleton(YahooChartModel);
 			

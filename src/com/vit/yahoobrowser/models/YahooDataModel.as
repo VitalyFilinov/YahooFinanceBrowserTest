@@ -75,6 +75,10 @@ package com.vit.yahoobrowser.models
 		public function setIndustries(data:Object):void
 		{
 			industries = data as ArrayList;
+			if(industries == null)
+			{
+				return;
+			}
 			eventDispatcher.dispatchEvent(new YahooIndustryEvent(YahooIndustryEvent.INDUSTRIES_CHANGED));
 		}
 		
@@ -91,6 +95,9 @@ package com.vit.yahoobrowser.models
 			{
 				return getSearch(currentSearchString);
 			}
+			
+			industries ||= new ArrayList();
+			
 			return industries;
 		}
 		
@@ -102,15 +109,19 @@ package com.vit.yahoobrowser.models
 		 */
 		public function setCompanies(data:Object):void
 		{
-			companies = data.data as ArrayList;
-			
-			if(data.error && currentIndustry)
+			if((data == null || data.error) && currentIndustry != null)
 			{
 				currentIndustry.isCurrent = false;
 				industries.itemUpdated(currentIndustry);
 				favorites.itemUpdated(currentIndustry);
 			}
 			
+			if(data == null || !(data.data is ArrayList))
+			{
+				return;
+			}
+			
+			companies = data.data as ArrayList;
 			eventDispatcher.dispatchEvent(new YahooCompanyEvent(YahooCompanyEvent.COMPANIES_CHANGED, null, data.error));
 		}
 		
@@ -119,6 +130,7 @@ package com.vit.yahoobrowser.models
 		 */
 		public function getCompanies():ArrayList
 		{
+			companies ||= new ArrayList();
 			return companies;
 		}
 		
@@ -150,6 +162,15 @@ package com.vit.yahoobrowser.models
 			{
 				companies.removeAll();
 			}
+		}
+		
+		
+		/**
+		 * Returns current selected industry value object.
+		 */
+		public function getCurrentIndustry():IIndustryVO
+		{
+			return currentIndustry;
 		}
 		
 		/**
@@ -240,6 +261,11 @@ package com.vit.yahoobrowser.models
 		 */
 		public function closeItem(source:ArrayList, index:int):void
 		{
+			if(source == null || source.length - 1 < index)
+			{
+				return;
+			}
+			
 			var _sector:IIndustryVO = source.getItemAt(index) as IIndustryVO;
 			_sector.isOpened = false;
 			
@@ -322,11 +348,15 @@ package com.vit.yahoobrowser.models
 		/**
 		 * Clears the search list and the searchString
 		 */
-		public function clearSearch():void
+		public function clearSearch():ArrayList
 		{
 			currentSearchString = "";
-			currentSearch.removeAll();
+			if(currentSearch != null)
+			{
+				currentSearch.removeAll();
+			}
 			currentSearch = null;
+			return currentSearch;
 		}
 		
 		/**
@@ -336,13 +366,25 @@ package com.vit.yahoobrowser.models
 		 * Otherwise was copied to main favorites list.
 		 * @param item:IIndustryVO - the value object to be stored in favorites list.
 		 */
-		public function addFavorite(item:IIndustryVO):void
+		public function addFavorite(item:IIndustryVO):Boolean
 		{
+			if(item == null)
+			{
+				return false;
+			}
+			
 			tmpFavorites ||= new ArrayList(favorites? favorites.source.slice(0):null);
+			
+			if(tmpFavorites.getItemIndex(item) > -1 && item.isFavorite == true)
+			{
+				return false;
+			}
 			tmpFavorites.addItem(item);
 			
 			item.isFavorite = true;
 			industries.itemUpdated(item);
+			
+			return true;
 		}
 		
 		/**
@@ -352,20 +394,28 @@ package com.vit.yahoobrowser.models
 		 * @param item:IIndustryVO - item to be removed from favorites list.
 		 * @param completeBoolean - if true, completely remove the item from the favorites.
 		 */
-		public function removeFavorite(item:IIndustryVO, complete:Boolean = false):void
+		public function removeFavorite(item:IIndustryVO, complete:Boolean = false):Boolean
 		{
+			
+			var result:Boolean = false;
+			
 			if(complete)
 			{
-				favorites.removeItem(item);
+				result = favorites.removeItem(item);
 			}
 			else
 			{
 				tmpFavorites ||= new ArrayList(favorites.source.slice(0));
-				tmpFavorites.removeItem(item);
+				result = tmpFavorites.removeItem(item);
 			}
 			
-			item.isFavorite = false;
-			industries.itemUpdated(item);
+			if(result == true)
+			{
+				item.isFavorite = false;
+				industries.itemUpdated(item);
+			}
+			
+			return result;
 		}
 		
 		/**
@@ -382,6 +432,7 @@ package com.vit.yahoobrowser.models
 			
 			var i:int = favorites.length;
 			var item:IIndustryVO;
+			
 			while(i--)
 			{
 				item = favorites.getItemAt(i) as IIndustryVO;
@@ -398,10 +449,13 @@ package com.vit.yahoobrowser.models
 				industries.itemUpdated(item);
 			}
 			
-			favorites = tmpFavorites;
+			favorites.removeAll();
+			favorites.addAll(tmpFavorites);
 			favorites.source.sortOn("name");
 
+			tmpFavorites.removeAll();
 			tmpFavorites = null;
+			
 			eventDispatcher.dispatchEvent(new YahooFavoritesEvent(YahooFavoritesEvent.CHANGED));
 		}
 		
