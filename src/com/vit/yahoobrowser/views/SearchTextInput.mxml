@@ -18,6 +18,11 @@
 			private var defaultText:String;
 			
 			/**
+			 * Focus status
+			 */
+			private var isOnFocus:Boolean;
+			
+			/**
 			 * On creation completed sets the current text as a default text.
 			 * Adds FocusEvent.MOUSE_FOCUS_CHANGE event listener to handle focus change by the user.
 			 */
@@ -32,6 +37,7 @@
 			 */
 			override protected function focusInHandler(event:FocusEvent):void
 			{
+				isOnFocus = true;
 				if(text.replace(/ /g, "") == defaultText)
 				{
 					this.text = "";
@@ -45,6 +51,7 @@
 			 */
 			override protected function focusOutHandler(event:FocusEvent):void
 			{
+				isOnFocus = false;
 				if(text.replace(/ /g, "") == "")
 				{
 					this.text = defaultText;
@@ -70,6 +77,18 @@
 			public function get value():String
 			{
 				return text == defaultText? "":text;
+			}
+			
+			override public function set text(newText:String):void
+			{
+				if(isOnFocus == false)
+				{
+					super.text = newText == ""? defaultText:newText;
+				}
+				else
+				{
+					super.text = newText;
+				}
 			}
 			
 		]]>

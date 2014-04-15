@@ -9,6 +9,9 @@
 			   minWidth="955" minHeight="600" creationComplete="onCreationComplete()">
 	<fx:Script>
 		<![CDATA[
+			import com.vit.yahoobrowser.models.YahooDataModelTest;
+			import com.vit.yahoobrowser.views.SearchTextInputTest;
+			
 			import flexUnitTests.YahooFinanceBrowserTestSuite;
 			
 			import org.floxy.ProxyRepositoryTest;
@@ -17,8 +20,10 @@
 			public function currentRunTestSuite():Array
 			{
 				var testsToRun:Array = new Array();
-				testsToRun.push(flexUnitTests.YahooFinanceBrowserTestSuite);
+				//testsToRun.push(flexUnitTests.YahooFinanceBrowserTestSuite);
+				//testsToRun.push(com.vit.yahoobrowser.models.YahooDataModelTest);
 				testsToRun.push(org.floxy.ProxyRepositoryTest);
+				testsToRun.push(com.vit.yahoobrowser.views.SearchTextInputTest);
 				testsToRun.push(org.floxy.event.ProxyClassEventTest);
 				return testsToRun;
 			}
