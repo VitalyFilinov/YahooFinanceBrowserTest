@@ -2,10 +2,10 @@
 <testrun name="" >
 <testsuite  name="Default Test Suite" project="YahooFinanceBrowserTest">
 <testsuite name="com.vit.yahoobrowser.models:YahooDataModelTest" type="testsuiteclass"/>
+<testsuite name="com.vit.yahoobrowser.views:IndustryManagerViewTest" type="testsuiteclass"/>
 <testsuite name="org.floxy:ProxyRepositoryTest" type="testsuiteclass"/>
 <testsuite name="com.vit.yahoobrowser.views:SearchTextInputTest" type="testsuiteclass"/>
 <testsuite name="org.floxy.event:ProxyClassEventTest" type="testsuiteclass"/>
-<testsuite name="flexUnitTests:YahooFinanceBrowserTestSuite" type="testcaseclass"/>
 </testsuite>
 <portNumber value="8765" />
 </testrun>

@@ -10,9 +10,8 @@
 	<fx:Script>
 		<![CDATA[
 			import com.vit.yahoobrowser.models.YahooDataModelTest;
+			import com.vit.yahoobrowser.views.IndustryManagerViewTest;
 			import com.vit.yahoobrowser.views.SearchTextInputTest;
-			
-			import flexUnitTests.YahooFinanceBrowserTestSuite;
 			
 			import org.floxy.ProxyRepositoryTest;
 			import org.floxy.event.ProxyClassEventTest;
@@ -20,8 +19,8 @@
 			public function currentRunTestSuite():Array
 			{
 				var testsToRun:Array = new Array();
-				//testsToRun.push(flexUnitTests.YahooFinanceBrowserTestSuite);
 				//testsToRun.push(com.vit.yahoobrowser.models.YahooDataModelTest);
+				testsToRun.push(com.vit.yahoobrowser.views.IndustryManagerViewTest);
 				testsToRun.push(org.floxy.ProxyRepositoryTest);
 				testsToRun.push(com.vit.yahoobrowser.views.SearchTextInputTest);
 				testsToRun.push(org.floxy.event.ProxyClassEventTest);

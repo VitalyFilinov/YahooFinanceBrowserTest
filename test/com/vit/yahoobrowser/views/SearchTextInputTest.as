@@ -30,16 +30,7 @@ package com.vit.yahoobrowser.views
 		public function tearDown():void
 		{
 			UIImpersonator.removeChild(subject);
-		}
-		
-		[BeforeClass]
-		public static function setUpBeforeClass():void
-		{
-		}
-		
-		[AfterClass]
-		public static function tearDownAfterClass():void
-		{
+			subject = null;
 		}
 		
 		[Test]

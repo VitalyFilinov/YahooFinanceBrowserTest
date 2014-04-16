@@ -29,6 +29,7 @@
 			 */
 			protected function changeHandler(event:TextOperationEvent):void
 			{
+				trace("VF", new Date().toLocaleTimeString(), "IndustryManagerView::changeHandler");
 				if(search.value.length > 2 || search.value.length == 0)
 				{
 					dispatchEvent(new YahooDataSearchEvent(YahooDataSearchEvent.SEARCH, search.value));
